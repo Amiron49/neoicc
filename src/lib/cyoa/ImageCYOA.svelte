@@ -150,7 +150,7 @@
 	style:background-color={app.styling.backgroundColor}
 >
 	{#if isCreator && !topNav}
-		<nav class="fixed z-20 flex h-screen flex-col justify-between bg-white p-2">
+		<nav class="fixed z-20 flex h-screen flex-col justify-between bg-gray-200 p-2">
 			<div class="flex flex-col gap-y-2">
 				<Tooltip.Provider>
 					<Tooltip.Root>
@@ -240,7 +240,7 @@
 			</div>
 		{:else if isCreator && topNav}
 			<nav
-				class="grid w-full grid-cols-8 justify-evenly gap-4 bg-white px-2.5 py-2.5"
+				class="grid w-full grid-cols-8 justify-evenly gap-4 bg-gray-200 px-2.5 py-2.5"
 				data-html2canvas-ignore
 			>
 				<Button href="/" variant="ghost">
@@ -418,7 +418,7 @@
 					<div>
 						{#if isCreator}
 							<div
-								class="mx-2 mt-2 flex flex-row items-center justify-between rounded border bg-white px-4 py-4"
+								class="mx-2 mt-2 flex flex-row items-center justify-between rounded border bg-gray-400 px-4 py-4"
 							>
 								<div>
 									<!-- eslint-disable-next-line svelte/no-at-html-tags -->
