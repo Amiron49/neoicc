@@ -38,20 +38,20 @@
 		bind:value={() => toS(value) || (hasNone ? 'none' : toS(value)),
 		(v) => (hasNone && v === 'none' ? (value = '') : (value = v))}
 	>
-		<Select.Trigger {id} class={cn(triggerClass)}>
+		<Select.Trigger {id} class={cn(triggerClass, "bg-gray-100")}>
 			{items.find((f) => f.value === value)?.name ?? placeholder}
 		</Select.Trigger>
-		<Select.Content>
+		<Select.Content class="bg-gray-100">
 			<Select.Group>
-				{#if hasNone}
-					<Select.Item value="none">None</Select.Item>
-				{/if}
-				{#each items as option}
-					<Select.Item value={option.value}>
-						{option.name}
-					</Select.Item>
-				{/each}
+			  {#if hasNone}
+				<Select.Item value="none" class="data-[highlighted]:bg-gray-200">None</Select.Item>
+			  {/if}
+			  {#each items as option}
+				<Select.Item value={option.value} class="data-[highlighted]:bg-gray-200">
+				  {option.name}
+				</Select.Item>
+			  {/each}
 			</Select.Group>
-		</Select.Content>
+		  </Select.Content>
 	</Select.Root>
 </div>

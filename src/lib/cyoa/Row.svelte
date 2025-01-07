@@ -349,7 +349,7 @@
 >
 	{#if isEditModeOn}
 		<div>
-			<div class="flex flex-row justify-end rounded-t border bg-white p-2">
+			<div class="flex flex-row justify-end rounded-t border bg-gray-200 p-2">
 				{@render TooltipIconButton(FilePlus2, 'Create New Object', () => {
 					row.objects.push({
 						id: generateID(),
@@ -381,7 +381,7 @@
 				})}
 			</div>
 			<div
-				class="flex flex-row flex-wrap justify-around gap-4 rounded-b border-x border-b bg-white p-2"
+				class="flex flex-row flex-wrap justify-around gap-4 rounded-b border-x border-b bg-gray-200 p-2"
 			>
 				<div class="w-[22%]">
 					<!-- The upload of Image -->
@@ -476,14 +476,14 @@
 						id="row-width-input-{row.id}"
 						label="Row Title"
 						placeholder="Placeholder"
-						bind:value={row.title}
+						bind:value={row.title} 
 					/>
 					<WrappedInput
 						id="allowed-choices-input-{row.id}"
 						label="Allowed Choices"
 						type="number"
 						placeholder="Placeholder"
-						bind:value={row.allowedChoices}
+						bind:value={row.allowedChoices} 
 					/>
 				</div>
 				<div class="flex flex-col gap-y-2">

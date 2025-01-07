@@ -476,7 +476,7 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 <div class={cn('flex', className)}>
 	<!-- Will only show when the Boolean isEditModeOn is true. -->
 	{#if isCreator && isEditModeOn}
-		<div class="mx-1 mt-2 w-full divide-y rounded border bg-white">
+		<div class="mx-1 mt-2 w-full divide-y rounded border bg-gray-200">
 			<div class="flex flex-row justify-around p-1">
 				{@render TooltipIconButton(ChevronLeft, 'Move Left', () => {
 					const idx = row.objects.indexOf(object);
@@ -553,13 +553,13 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 				</div>
 				<div class="mt-1 flex flex-col items-start gap-y-1">
 					<Label for="object-text-textarea-{object.id}">Object Text</Label>
-					<Textarea id="object-text-textarea-{object.id}" bind:value={object.text} rows={6} />
+					<Textarea id="object-text-textarea-{object.id}" bind:value={object.text} rows={6} class="bg-gray-50"/>
 				</div>
 				<div class="grid grid-cols-2 gap-x-2 gap-y-2">
 					<WrappedInput
 						label="Object Title"
 						id="object-title-input-{object.id}"
-						bind:value={object.title}
+						bind:value={object.title} 
 					/>
 					<WrappedInput label="Object ID" id="object-id-input-{object.id}" bind:value={object.id} />
 					<WrappedSelect
