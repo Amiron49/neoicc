@@ -385,19 +385,23 @@
 					<!-- The upload of Image -->
 					{#if !row.isButtonRow}
 						<div class="flex flex-col items-center gap-y-2">
-							{#if row.image}
-								<button onclick={() => (modal = 'appImageUpload')}>
-								<img
-									class="inline-block h-[210px] w-auto object-contain"
-									src={getImageURL(row.image, appMetaState.imagePrefix)}
-									alt="row"
-									style="max-height: 210px; min-height: 100px;"
-								/>
-								</button>
-							{/if}
-							<Button onclick={() => (modal = 'appImageUpload')} class="w-full min-w-48">
-								Change Image
-							</Button>
+							<button onclick={() => (modal = 'appImageUpload')} class="w-full">
+								{#if row.image}
+									<img
+										class="inline-block h-[250px] w-auto object-contain"
+										src={getImageURL(row.image, appMetaState.imagePrefix)}
+										alt="row"
+										style="max-height: 250px; min-height: 150px;"
+									/>
+								{:else}
+									<div 
+										class="h-[250px] w-full flex items-center justify-center border-2 border-dashed border-gray-300 bg-gray-50"
+										style="max-height: 250px; min-height: 150px;"
+									>
+										<span class="text-gray-500">Set Image</span>
+									</div>
+								{/if}
+							</button>
 						</div>
 					{:else}
 						<!-- The button that opens button settings -->
