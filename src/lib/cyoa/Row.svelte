@@ -489,14 +489,14 @@
 						bind:value={row.currentChoices}
 					/>
 				</div>
-				<div>
-					<div class="flex flex-col items-start gap-y-1">
+				<div class="w-[45%]">
+					<div class="flex flex-col items-start gap-y-1 w-full">
 						<Label for="row-text-textarea-{row.id}">Row Text</Label>
 						<Textarea
 							id="row-text-textarea-{row.id}"
 							bind:value={row.titleText}
-							rows={8}
-							class="min-w-96"
+							rows={10}
+							class="w-full"
 						/>
 					</div>
 				</div>
