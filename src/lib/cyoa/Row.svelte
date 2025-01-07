@@ -252,19 +252,21 @@
 
 {#snippet RowImage()}
 	{#if row.image}
-		<img
-			class="inline-block"
-			style:width={styling.rowImageWidth + '%'}
-			style:margin-top={styling.rowImageMarginTop + '%'}
-			style:margin-bottom={styling.rowImageMarginBottom + '%'}
-			style:border-radius={`${styling.rowImgBorderRadiusTopLeft}0${rowImageBorderRadiusSuffix} ${styling.rowImgBorderRadiusTopRight}0${rowImageBorderRadiusSuffix} ${styling.rowImgBorderRadiusBottomRight}0${rowImageBorderRadiusSuffix} ${styling.rowImgBorderRadiusBottomLeft}0${rowImageBorderRadiusSuffix}`}
-			style:overflow={styling.rowImgOverflowIsOn ? 'hidden' : undefined}
-			style:border={styling.rowImgBorderIsOn
-				? `${styling.rowImgBorderWidth}px ${styling.rowImgBorderStyle} ${styling.rowImgBorderColor}`
-				: undefined}
-			src={getImageURL(row.image, appMetaState.imagePrefix)}
-			alt="row"
-		/>
+		<div class="relative inline-block">
+			<img
+				class="inline-block"
+				style:width={styling.rowImageWidth + '%'}
+				style:margin-top={styling.rowImageMarginTop + '%'}
+				style:margin-bottom={styling.rowImageMarginBottom + '%'}
+				style:border-radius={`${styling.rowImgBorderRadiusTopLeft}0${rowImageBorderRadiusSuffix} ${styling.rowImgBorderRadiusTopRight}0${rowImageBorderRadiusSuffix} ${styling.rowImgBorderRadiusBottomRight}0${rowImageBorderRadiusSuffix} ${styling.rowImgBorderRadiusBottomLeft}0${rowImageBorderRadiusSuffix}`}
+				style:overflow={styling.rowImgOverflowIsOn ? 'hidden' : undefined}
+				style:border={styling.rowImgBorderIsOn
+					? `${styling.rowImgBorderWidth}px ${styling.rowImgBorderStyle} ${styling.rowImgBorderColor}`
+					: undefined}
+				src={getImageURL(row.image, appMetaState.imagePrefix)}
+				alt="row"
+			/>
+		</div>
 	{:else}
 		<div class="inline-block"></div>
 	{/if}
@@ -385,23 +387,40 @@
 					<!-- The upload of Image -->
 					{#if !row.isButtonRow}
 						<div class="flex flex-col items-center gap-y-2">
-							<button onclick={() => (modal = 'appImageUpload')} class="w-full">
+							<div class="w-full relative">
+								<button onclick={() => (modal = 'appImageUpload')} class="w-full">
+									{#if row.image}
+										<img
+											class="inline-block h-[250px] w-auto object-contain"
+											src={getImageURL(row.image, appMetaState.imagePrefix)}
+											alt="row"
+											style="max-height: 250px; min-height: 150px;"
+										/>
+									{:else}
+										<div 
+											class="h-[250px] w-full flex items-center justify-center border-2 border-dashed border-gray-300 bg-gray-50"
+											style="max-height: 250px; min-height: 150px;"
+										>
+											<span class="text-gray-500">Set Image</span>
+										</div>
+									{/if}
+								</button>
 								{#if row.image}
-									<img
-										class="inline-block h-[250px] w-auto object-contain"
-										src={getImageURL(row.image, appMetaState.imagePrefix)}
-										alt="row"
-										style="max-height: 250px; min-height: 150px;"
-									/>
-								{:else}
-									<div 
-										class="h-[250px] w-full flex items-center justify-center border-2 border-dashed border-gray-300 bg-gray-50"
-										style="max-height: 250px; min-height: 150px;"
+									<button
+										class="absolute top-1 right-1 bg-white/50 hover:bg-white/80 rounded-full w-6 h-6 flex items-center justify-center shadow-sm"
+										onclick={(e) => {
+											e.stopPropagation();
+											row.image = '';
+										}}
+										aria-label="Remove image"
 									>
-										<span class="text-gray-500">Set Image</span>
-									</div>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+											<line x1="18" y1="6" x2="6" y2="18"></line>
+											<line x1="6" y1="6" x2="18" y2="18"></line>
+										</svg>
+									</button>
 								{/if}
-							</button>
+							</div>
 						</div>
 					{:else}
 						<!-- The button that opens button settings -->

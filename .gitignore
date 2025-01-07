@@ -26,3 +26,4 @@ vite.config.ts.timestamp-*
 
 # LLM stuff
 DOCUMENTATION_for_LLM.md
+/Extra_documentation_for_LLM
