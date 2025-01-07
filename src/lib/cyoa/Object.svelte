@@ -553,7 +553,7 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 				</div>
 				<div class="mt-1 flex flex-col items-start gap-y-1">
 					<Label for="object-text-textarea-{object.id}">Object Text</Label>
-					<Textarea id="object-text-textarea-{object.id}" bind:value={object.text} rows={5} />
+					<Textarea id="object-text-textarea-{object.id}" bind:value={object.text} rows={6} />
 				</div>
 				<div class="grid grid-cols-2 gap-x-2 gap-y-2">
 					<WrappedInput
