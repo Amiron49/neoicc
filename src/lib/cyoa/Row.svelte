@@ -381,17 +381,18 @@
 			<div
 				class="flex flex-row flex-wrap justify-around gap-4 rounded-b border-x border-b bg-white p-2"
 			>
-				<div>
+				<div class="w-[22%]">
 					<!-- The upload of Image -->
 					{#if !row.isButtonRow}
 						<div class="flex flex-col items-center gap-y-2">
 							{#if row.image}
 								<button onclick={() => (modal = 'appImageUpload')}>
-									<img
-										class="inline-block h-max max-h-36 w-max max-w-80"
-										src={getImageURL(row.image, appMetaState.imagePrefix)}
-										alt="row"
-									/>
+								<img
+									class="inline-block h-[210px] w-auto object-contain"
+									src={getImageURL(row.image, appMetaState.imagePrefix)}
+									alt="row"
+									style="max-height: 210px; min-height: 100px;"
+								/>
 								</button>
 							{/if}
 							<Button onclick={() => (modal = 'appImageUpload')} class="w-full min-w-48">
@@ -495,22 +496,22 @@
 						<Textarea
 							id="row-text-textarea-{row.id}"
 							bind:value={row.titleText}
-							rows={10}
+							rows={11}
 							class="w-full"
 						/>
 					</div>
 				</div>
 				<div class="flex w-full flex-row justify-around gap-x-2">
-					<div class="flex flex-row items-center gap-x-1">
-						<Switch
-							id="deselect-choices-switch-{row.id}"
-							bind:checked={() => row.deselectChoices ?? false, (v) => (row.deselectChoices = v)}
-						/>
-						<Label for="deselect-choices-switch-{row.id}" class="text-left">
-							Deselects choices when Row lack requirements?
-						</Label>
-					</div>
 					{#if row.isResultRow}
+						<div class="flex flex-row items-center gap-x-1">
+							<Switch
+								id="deselect-choices-switch-{row.id}"
+								bind:checked={() => row.deselectChoices ?? false, (v) => (row.deselectChoices = v)}
+							/>
+							<Label for="deselect-choices-switch-{row.id}" class="text-left">
+								Deselects choices when Row lack requirements?
+							</Label>
+						</div>
 						<div class="flex flex-row items-center gap-x-1">
 							<Switch
 								id="choices-share-template-switch-{row.id}"
