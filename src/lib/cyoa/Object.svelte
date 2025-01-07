@@ -22,17 +22,17 @@
 	import { app, appMetaState } from '$lib/store/store.svelte';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import * as Accordion from '$lib/components/ui/accordion';
-	import ObjectScore from './object/ObjectScore.svelte';
-	import { Checkbox } from '$lib/components/ui/checkbox';
-	import {
-		activateObject,
-		checkRequireds,
-		selectedOneLess,
-		selectedOneMore
-	} from '$lib/store/actions';
-	import ImageUpload from './row/ImageUpload.svelte';
-	import Requirement from './row/Requirement.svelte';
-	import ObjectSettings from './object/ObjectSettings.svelte';
+import ObjectScore from './object/ObjectScore.svelte';
+import { Checkbox } from '$lib/components/ui/checkbox';
+import {
+	activateObject,
+	checkRequireds,
+	selectedOneLess,
+	selectedOneMore
+} from '$lib/store/actions';
+import ImageUpload from './row/ImageUpload.svelte';
+import Requirement from './row/Requirement.svelte';
+import ObjectSettings from './object/ObjectSettings.svelte';
 	import ObjectAddon from './object/ObjectAddon.svelte';
 	import ObjectRequirement from './object/ObjectRequirement.svelte';
 	import DOMPurify from 'dompurify';
@@ -515,19 +515,41 @@
 						placeholder="100"
 					/>
 				{/if}
-				{#if object.image.length > 0}
-					<div class="flex w-full flex-col items-center">
-						<button onclick={() => (modal = 'appImageUpload')}>
-							<img
-								class="max-h-44 px-12"
-								src={getImageURL(appMetaState.imagePrefix, object.image)}
-								alt=""
-							/>
+				<div class="flex flex-col items-center gap-y-2">
+					<div class="w-full relative">
+						<button onclick={() => (modal = 'appImageUpload')} class="w-full">
+							{#if object.image}
+								<img
+									class="inline-block h-[250px] w-auto object-contain"
+									src={getImageURL(object.image, appMetaState.imagePrefix)}
+									alt="object"
+									style="max-height: 250px; min-height: 150px;"
+								/>
+							{:else}
+								<div 
+									class="h-[250px] w-full flex items-center justify-center border-2 border-dashed border-gray-300 bg-gray-50"
+									style="max-height: 250px; min-height: 150px;"
+								>
+									<span class="text-gray-500">Set Image</span>
+								</div>
+							{/if}
 						</button>
+						{#if object.image}
+							<button
+								class="absolute top-1 right-1 bg-white/50 hover:bg-white/80 rounded-full w-6 h-6 flex items-center justify-center shadow-sm"
+								onclick={(e) => {
+									e.stopPropagation();
+									object.image = '';
+								}}
+								aria-label="Remove image"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<line x1="18" y1="6" x2="6" y2="18"></line>
+									<line x1="6" y1="6" x2="18" y2="18"></line>
+								</svg>
+							</button>
+						{/if}
 					</div>
-				{/if}
-				<div>
-					<Button size="lg" onclick={() => (modal = 'appImageUpload')}>Change Image</Button>
 				</div>
 				<div class="mt-1 flex flex-col items-start gap-y-1">
 					<Label for="object-text-textarea-{object.id}">Object Text</Label>
