@@ -829,7 +829,7 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 										(v) => (object.cancelDeactivate = v)}
 									/>
 									<Label for="object-cancel-deactivate-{object.id}">
-										Cancel this choice will not deactivate other choices?
+										Keep linked choices active after deselection
 									</Label>
 								</div>
 							{/if}
@@ -950,7 +950,7 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 									(v) => (object.textfieldIsOn = v)}
 								/>
 								<Label for="object-textfield-is-on-{object.id}">
-									Word will be changed to something else at select.
+									Word will be changed to something else at select
 								</Label>
 							</div>
 							{#if object.textfieldIsOn}
@@ -979,7 +979,7 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 									(v) => (object.isImageUpload = v)}
 								/>
 								<Label for="object-is-image-upload-{object.id}">
-									Player can upload a picture by pressing this choice.
+									Player can upload a picture by pressing this choice
 								</Label>
 							</div>
 							<div class="flex flex-row items-center gap-x-1">
@@ -989,7 +989,7 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 									(v) => (object.addToAllowChoice = v)}
 								/>
 								<Label for="object-add-to-allow-choice-{object.id}">
-									Adds or takes away a row's Allowed Choices.
+									Adds or takes away a row's Allowed Choices
 								</Label>
 							</div>
 							{#if object.addToAllowChoice}

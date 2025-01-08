@@ -391,15 +391,15 @@
 								<button onclick={() => (modal = 'appImageUpload')} class="w-full">
 									{#if row.image}
 										<img
-											class="inline-block h-[250px] w-auto object-contain"
+											class="inline-block h-[270px] w-auto object-contain"
 											src={getImageURL(row.image, appMetaState.imagePrefix)}
 											alt="row"
-											style="max-height: 250px; min-height: 150px;"
+											style="max-height: 270px; min-height: 150px;"
 										/>
 									{:else}
 										<div 
-											class="h-[250px] w-full flex items-center justify-center border-2 border-dashed border-gray-300 bg-gray-50"
-											style="max-height: 250px; min-height: 150px;"
+											class="h-[270px] w-full flex items-center justify-center border-2 border-dashed border-gray-300 bg-gray-50"
+											style="max-height: 270px; min-height: 150px;"
 										>
 											<span class="text-gray-500">Set Image</span>
 										</div>
@@ -519,7 +519,7 @@
 						<Textarea
 							id="row-text-textarea-{row.id}"
 							bind:value={row.titleText}
-							rows={11}
+							rows={10}
 							class="w-full"
 						/>
 					</div>
