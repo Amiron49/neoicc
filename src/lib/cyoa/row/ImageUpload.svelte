@@ -247,6 +247,7 @@
 					{#if imgSrc}
 						<SvelteCrop {crop} onchange={(c) => (crop = c)} {aspect} class="w-max">
 							<img
+								class="max-w-screen-md"
 								src={imgSrc}
 								onload={(e) => handleImageLoad(e.currentTarget as HTMLImageElement)}
 								bind:this={imageRef}
