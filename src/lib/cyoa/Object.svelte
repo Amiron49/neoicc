@@ -822,6 +822,18 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 								</Label>
 							</div>
 							{#if object.activateOtherChoice}
+								<div class="flex flex-row items-center gap-x-1 ml-4">
+									<Checkbox
+										id="object-cancel-deactivate-{object.id}"
+										bind:checked={() => object.cancelDeactivate ?? false,
+										(v) => (object.cancelDeactivate = v)}
+									/>
+									<Label for="object-cancel-deactivate-{object.id}">
+										Cancel this choice will not deactivate other choices?
+									</Label>
+								</div>
+							{/if}
+							{#if object.activateOtherChoice}
 								<p>
 									Works badly if multiple of these have the same ID, or if the target has
 									requirements attached. You can use comma to activate multiple (ID,ID,ID/ON#1).

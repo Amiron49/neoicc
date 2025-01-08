@@ -245,8 +245,9 @@ export type Object = {
 	// imageIsUrl?: boolean;
 	deactivateOtherChoice?: boolean;
 	deactivateThisChoice?: string;
-	activateOtherChoice?: boolean;
-	activateThisChoice?: string;
+  activateOtherChoice?: boolean;
+  activateThisChoice?: string;
+  cancelDeactivate?: boolean;
 	multiplyPointtypeIsOn?: boolean;
 	multiplyPointtypeIsOnCheck?: boolean;
 	pointTypeToMultiply?: string;

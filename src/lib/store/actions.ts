@@ -581,32 +581,38 @@ export function activateObject(object: Object, row: Row | Backpack) {
 			if (object.activateOtherChoice && typeof object.activateThisChoice !== 'undefined') {
 				const array = object.activateThisChoice.split(',');
 
+				// First handle all child activations
 				for (const el of array.toReversed()) {
 					for (const row of rows) {
-						for (const object of row.objects) {
-							if (object.isSelectableMultiple) {
-								if (object.id === el.split('/ON#')[0]) {
+						for (const childObject of row.objects) {
+							if (childObject.isSelectableMultiple) {
+								if (childObject.id === el.split('/ON#')[0]) {
 									const num = pi(el.split('/ON#')[1]);
 									if (num > 0) {
 										for (let i = 0; i < num; i++) {
-											if (object.numMultipleTimesMinus)
-												object.numMultipleTimesMinus = pi(object.numMultipleTimesMinus) - 1;
-											object.forcedActivated = false;
-											selectedOneLess(object);
+											if (childObject.numMultipleTimesMinus)
+												childObject.numMultipleTimesMinus = pi(childObject.numMultipleTimesMinus) - 1;
+											childObject.forcedActivated = true;
+											selectedOneLess(childObject);
 										}
 									} else if (num < 0) {
 										for (let i = 0; i < -num; i++) {
-											selectedOneMore(object);
-											object.forcedActivated = false;
-											if (object.numMultipleTimesMinus)
-												object.numMultipleTimesMinus = pi(object.numMultipleTimesMinus) + 1;
+											selectedOneMore(childObject);
+											childObject.forcedActivated = true;
+											if (childObject.numMultipleTimesMinus)
+												childObject.numMultipleTimesMinus = pi(childObject.numMultipleTimesMinus) + 1;
 										}
 									}
 								}
 							} else {
-								if (object.id === el && object.isActive) {
-									object.isNotSelectable = false;
-									activateObject(object, row);
+								if (childObject.id === el) {
+									// Only activate if not already active
+									if (!childObject.isActive) {
+										childObject.isNotSelectable = false;
+										activateObject(childObject, row);
+									}
+									// Ensure forcedActivated state is set
+									childObject.forcedActivated = true;
 								}
 							}
 						}
@@ -803,36 +809,38 @@ export function activateObject(object: Object, row: Row | Backpack) {
 			if (object.activateOtherChoice && typeof object.activateThisChoice !== 'undefined') {
 				const array = object.activateThisChoice.split(',');
 
+				// First handle all child deactivations
 				for (const el of array.toReversed()) {
-					// This will force activate another choice.
-
 					for (const row of rows) {
-						for (const object of row.objects) {
-							if (object.isSelectableMultiple) {
-								if (object.id === el.split('/ON#')[0]) {
+						for (const childObject of row.objects) {
+							if (childObject.isSelectableMultiple) {
+								if (childObject.id === el.split('/ON#')[0]) {
 									const num = pi(el.split('/ON#')[1]);
 									if (num > 0) {
 										for (let i = 0; i < num; i++) {
-											selectedOneMore(object);
-											object.forcedActivated = true;
-											if (object.numMultipleTimesMinus)
-												object.numMultipleTimesMinus = pi(object.numMultipleTimesMinus) + 1;
+											selectedOneMore(childObject);
+											childObject.forcedActivated = false;
+											if (childObject.numMultipleTimesMinus)
+												childObject.numMultipleTimesMinus = pi(childObject.numMultipleTimesMinus) + 1;
 										}
 									} else if (num < 0) {
 										for (let i = 0; i < -num; i++) {
-											if (object.numMultipleTimesMinus)
-												object.numMultipleTimesMinus = pi(object.numMultipleTimesMinus) - 1;
-											object.forcedActivated = true;
-											selectedOneLess(object);
+											if (childObject.numMultipleTimesMinus)
+												childObject.numMultipleTimesMinus = pi(childObject.numMultipleTimesMinus) - 1;
+											childObject.forcedActivated = false;
+											selectedOneLess(childObject);
 										}
 									}
 								}
 							} else {
-								if (object.id !== el || object.isActive) {
-									if (object.id === el && object.isActive) object.isNotSelectable = true;
-								} else {
-									object.isNotSelectable = true;
-									activateObject(object, row);
+								if (childObject.id === el) {
+									// Only deactivate if currently active
+									if (childObject.isActive) {
+										activateObject(childObject, row);
+									}
+									// Reset child object state
+									childObject.isNotSelectable = false;
+									childObject.forcedActivated = false;
 								}
 							}
 						}
