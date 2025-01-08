@@ -235,14 +235,8 @@ export type Object = {
 		afterText: string;
 		showScore: boolean;
 		isActive?: boolean;
-		// "setValue": {"type": "boolean"},
-		// "discountIsOn": {"type": "boolean"},
-		// "isRandom": {"type": "boolean"},
-		// "minValue": int_string,
-		// "maxValue": int_string,
 	}[];
 	groups: { id: string }[];
-	// imageIsUrl?: boolean;
 	deactivateOtherChoice?: boolean;
 	deactivateThisChoice?: string;
   activateOtherChoice?: boolean;
@@ -267,17 +261,13 @@ export type Object = {
 	dividePointtypeIsOnCheck?: boolean;
 	pointTypeToDivide?: string;
 	divideWithThis?: number | string;
-	// selectFunctions?: boolean;
-	// selectOnce?: boolean;
 	isSelectableMultiple?: boolean;
 	isMultipleUseVariable?: boolean;
 	cleanACtivatedOnSelect?: boolean;
 	isPrivateStyling?: boolean;
 	styling?: Styling;
-	// currentChoices?: number | null;
 	forcedActivated?: boolean;
-	// initMultipleTimesMinus?: number | string;
-	// imageLink?: string;
+	ignoreForcedActivation?: boolean;
 	idOfTheTextfieldWord?: string;
 	wordChangeSelect?: string;
 	wordChangeDeselect?: string;
@@ -287,10 +277,10 @@ export type Object = {
 };
 
 export type App = {
-	isEditModeOnAll: boolean; // If the editmode is open.
-	isStyleOpen: boolean; // If the style is open.
-	isPointsOpen: boolean; // If the points is open.
-	isChoicesOpen: boolean; // If the choice is open.
+	isEditModeOnAll: boolean;
+	isStyleOpen: boolean;
+	isPointsOpen: boolean;
+	isChoicesOpen: boolean;
 	isDesignOpen: boolean;
 	isViewerVersion: boolean;
 	backpack: {
@@ -347,7 +337,7 @@ export type App = {
 	chapters: {
 		pages: { app: App; children: App['chapters'][0]['pages'] }[];
 	}[];
-	activated: string[]; // The array that holds the id's of the selected objects.
+	activated: string[];
 	rows: {
 		id: string;
 		title: string;
@@ -390,8 +380,7 @@ export type App = {
 		randomMin?: number;
 		randomMax?: number;
 		pointTypeRandom?: string;
-		// imageIsUrl?: boolean;
-	}[]; // The rows that the user have been created.
+	}[];
 	pointTypes: {
 		id: string;
 		name: string;
@@ -411,11 +400,9 @@ export type App = {
 		imageOnSide?: boolean;
 		iconWidth?: number | string;
 		iconHeight?: number | string;
-		// initValue?: number;
-	}[]; // The pointtypes that the user have created.
-	variables: { id: string; isTrue: boolean }[]; // The variables that the user have created.
+	}[];
+	variables: { id: string; isTrue: boolean }[];
 
-	// The defaults that will fill the various text boxes.
 	defaultRowTitle: string;
 	defaultRowText: string;
 	defaultChoiceTitle: string;
@@ -427,7 +414,6 @@ export type App = {
 	defaultAddonTitle: string;
 	defaultAddonText: string;
 
-	// The styling that has to be done in the row.
 	styling: Styling & {
 		scoreText: string;
 		scoreTextSize: number | string;
@@ -441,7 +427,6 @@ export type App = {
 		objectImageMarginBottom: number | string;
 		rowImageMarginTop: number | string;
 
-		// Border radius object, and border
 		objectBorderRadiusTopLeft: number;
 		objectBorderRadiusTopRight: number;
 		objectBorderRadiusBottomRight: number;
@@ -454,7 +439,6 @@ export type App = {
 		objectBorderStyle: string;
 		objectBorderWidth: number;
 
-		// Border radius object image, and border
 		objectImgBorderRadiusTopLeft: number;
 		objectImgBorderRadiusTopRight: number;
 		objectImgBorderRadiusBottomRight: number;
@@ -466,7 +450,6 @@ export type App = {
 		objectImgBorderStyle: string;
 		objectImgBorderWidth: number;
 
-		// Border radius row image, and border
 		rowImgBorderRadiusTopLeft: number;
 		rowImgBorderRadiusTopRight: number;
 		rowImgBorderRadiusBottomRight: number;
@@ -483,7 +466,6 @@ export type App = {
 		rowBorderStyle: string;
 		rowBorderWidth: number;
 
-		// Border radius row, and border
 		rowBorderRadiusTopLeft: number;
 		rowBorderRadiusTopRight: number;
 		rowBorderRadiusBottomRight: number;
@@ -512,23 +494,7 @@ export type Requireds = {
 	afterText: string;
 	beforeText: string;
 	orNum?: number;
-	// selNum: { type: "integer" };
 	startingSum?: string;
-	// more: empty_array;
-	// required;
-	// requireds;
-	// orRequired;
-	// id;
-	// type;
-	// reqId;
-	// reqId1;
-	// reqId2;
-	// reqId3;
-	// reqPoints;
-	// showRequired;
-	// operator;
-	// afterText;
-	// beforeText;
 };
 
 export type Row = App['rows'][0];

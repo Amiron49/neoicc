@@ -611,8 +611,10 @@ export function activateObject(object: Object, row: Row | Backpack) {
 										childObject.isNotSelectable = false;
 										activateObject(childObject, row);
 									}
-									// Always set forcedActivated while parent is active
-									childObject.forcedActivated = true;
+									// Set forcedActivated only if parent doesn't have ignoreForcedActivation
+									if (typeof object.ignoreForcedActivation === 'undefined' || object.ignoreForcedActivation === false) {
+										childObject.forcedActivated = true;
+									}
 								}
 							}
 						}

@@ -822,6 +822,18 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 								</Label>
 							</div>
 							{#if object.activateOtherChoice}
+							<div class="flex flex-row items-center gap-x-1 ml-4">
+								<Checkbox
+									id="object-ignore-forced-activation-{object.id}"
+									bind:checked={() => object.ignoreForcedActivation ?? false,
+									(v) => (object.ignoreForcedActivation = v)}
+								/>
+								<Label for="object-ignore-forced-activation-{object.id}">
+									Allow deactivation of forced choices
+								</Label>
+							</div>
+							{/if}
+							{#if object.activateOtherChoice}
 								<div class="flex flex-row items-center gap-x-1 ml-4">
 									<Checkbox
 										id="object-cancel-deactivate-{object.id}"
@@ -829,7 +841,7 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 										(v) => (object.cancelDeactivate = v)}
 									/>
 									<Label for="object-cancel-deactivate-{object.id}">
-										Keep linked choices active after deselection
+										Keep forced choices active after deselecting this choice
 									</Label>
 								</div>
 							{/if}
