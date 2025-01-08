@@ -1021,6 +1021,11 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 			class="w-full p-0"
 			style={objectBackground}
 			onclick={() => {
+				// Allow deactivation if cancelDeactivate is active
+				if (object.isActive && object.forcedActivated) {
+					return;
+				}
+				
 				if (object.isImageUpload) modal = 'appImageUpload';
 				else if (
 					!row.isInfoRow &&
@@ -1029,6 +1034,10 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 					!object.isButtonObject
 				) {
 					activateObject(object, row);
+					// Remove forced activation when cancelDeactivate is active
+					if (object.cancelDeactivate) {
+						object.forcedActivated = false;
+					}
 				}
 			}}
 			role="button"
