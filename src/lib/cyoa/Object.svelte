@@ -825,8 +825,8 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 							<div class="flex flex-row items-center gap-x-1 ml-4">
 								<Checkbox
 									id="object-ignore-forced-activation-{object.id}"
-									bind:checked={() => object.ignoreForcedActivation ?? false,
-									(v) => (object.ignoreForcedActivation = v)}
+									bind:checked={() => object.isAllowDeselect ?? false,
+									(v) => (object.isAllowDeselect = v)}
 								/>
 								<Label for="object-ignore-forced-activation-{object.id}">
 									Allow deactivation of forced choices
@@ -837,8 +837,8 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 								<div class="flex flex-row items-center gap-x-1 ml-4">
 									<Checkbox
 										id="object-cancel-deactivate-{object.id}"
-										bind:checked={() => object.cancelDeactivate ?? false,
-										(v) => (object.cancelDeactivate = v)}
+										bind:checked={() => object.isNotDeactivate ?? false,
+										(v) => (object.isNotDeactivate = v)}
 									/>
 									<Label for="object-cancel-deactivate-{object.id}">
 										Keep forced choices active after deselecting this choice
@@ -1033,7 +1033,7 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 			class="w-full p-0"
 			style={objectBackground}
 			onclick={() => {
-				// Allow deactivation if cancelDeactivate is active
+				// Allow deactivation if isNotDeactivate is active
 				if (object.isActive && object.forcedActivated) {
 					return;
 				}
@@ -1046,8 +1046,8 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 					!object.isButtonObject
 				) {
 					activateObject(object, row);
-					// Remove forced activation when cancelDeactivate is active
-					if (object.cancelDeactivate) {
+					// Remove forced activation when isNotDeactivate is active
+					if (object.isNotDeactivate) {
 						object.forcedActivated = false;
 					}
 				}

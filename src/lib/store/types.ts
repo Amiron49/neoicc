@@ -241,7 +241,7 @@ export type Object = {
 	deactivateThisChoice?: string;
   activateOtherChoice?: boolean;
   activateThisChoice?: string;
-  cancelDeactivate?: boolean;
+  isNotDeactivate?: boolean;
 	multiplyPointtypeIsOn?: boolean;
 	multiplyPointtypeIsOnCheck?: boolean;
 	pointTypeToMultiply?: string;
@@ -267,7 +267,7 @@ export type Object = {
 	isPrivateStyling?: boolean;
 	styling?: Styling;
 	forcedActivated?: boolean;
-	ignoreForcedActivation?: boolean;
+	isAllowDeselect?: boolean;
 	idOfTheTextfieldWord?: string;
 	wordChangeSelect?: string;
 	wordChangeDeselect?: string;

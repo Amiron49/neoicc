@@ -611,8 +611,8 @@ export function activateObject(object: Object, row: Row | Backpack) {
 										childObject.isNotSelectable = false;
 										activateObject(childObject, row);
 									}
-									// Set forcedActivated only if parent doesn't have ignoreForcedActivation
-									if (typeof object.ignoreForcedActivation === 'undefined' || object.ignoreForcedActivation === false) {
+									// Set forcedActivated only if parent doesn't have isAllowDeselect
+									if (typeof object.isAllowDeselect === 'undefined' || object.isAllowDeselect === false) {
 										childObject.forcedActivated = true;
 									}
 								}
@@ -836,8 +836,8 @@ export function activateObject(object: Object, row: Row | Backpack) {
 								}
 							} else {
 								if (childObject.id === el) {
-									// Only deactivate if currently active and cancelDeactivate is not set
-									if (childObject.isActive && !object.cancelDeactivate) {
+									// Only deactivate if currently active and isNotDeactivate is not set
+									if (childObject.isActive && !object.isNotDeactivate) {
 										activateObject(childObject, row);
 									}
 									// Reset child object state when parent deactivates
