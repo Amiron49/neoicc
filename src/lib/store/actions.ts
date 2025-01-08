@@ -834,13 +834,15 @@ export function activateObject(object: Object, row: Row | Backpack) {
 								}
 							} else {
 								if (childObject.id === el) {
-									// Only deactivate if currently active
-									if (childObject.isActive) {
+									// Only deactivate if currently active and cancelDeactivate is not set
+									if (childObject.isActive && !object.cancelDeactivate) {
 										activateObject(childObject, row);
 									}
-									// Reset child object state
-									childObject.isNotSelectable = false;
-									childObject.forcedActivated = false;
+									// Reset child object state unless cancelDeactivate is set
+									if (!object.cancelDeactivate) {
+										childObject.isNotSelectable = false;
+										childObject.forcedActivated = false;
+									}
 								}
 							}
 						}
