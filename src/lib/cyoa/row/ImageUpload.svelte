@@ -22,6 +22,8 @@
 		);
 		const ctx = offscreen.getContext('2d');
 		if (!ctx) throw new Error('No 2d context in offscreen canvas');
+		ctx.imageSmoothingEnabled = true;
+		ctx.imageSmoothingQuality = 'high';
 
 		const cropX = crop.x * scaleX * 1;
 		const cropY = crop.y * scaleY * 1;
@@ -172,7 +174,7 @@
 		);
 	}
 
-	let timeoutRef: number | null = null;
+	let timeoutRef: ReturnType<typeof setTimeout> | null = null;
 	$effect(() => {
 		if (!open) return;
 		(() => [crop, imgSrc, imageRef, scale, quality])();
@@ -245,6 +247,7 @@
 					{#if imgSrc}
 						<SvelteCrop {crop} onchange={(c) => (crop = c)} {aspect} class="w-max">
 							<img
+								class="max-w-screen-md"
 								src={imgSrc}
 								onload={(e) => handleImageLoad(e.currentTarget as HTMLImageElement)}
 								bind:this={imageRef}

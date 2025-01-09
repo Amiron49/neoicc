@@ -28,7 +28,7 @@
 
 	<div class="flex flex-col gap-y-1 p-2">
 		{#if required.type !== 'pointCompare'}
-			<div class="flex flex-row items-center gap-y-1">
+			<div class="flex flex-row items-center gap-x-1">
 				<Checkbox
 					id="object-required-show-required-{obj.id}-{required.id}"
 					bind:checked={required.showRequired}
