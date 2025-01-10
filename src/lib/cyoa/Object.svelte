@@ -147,6 +147,8 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 			if (styling.selFilterBgImageIsOn && styling.selFilterBgImage) {
 				style += `background-image: url("${styling.selFilterBgImage}");`;
 				style += `background-repeat: repeat;`;
+				style += `background-position: right bottom;`;
+				style += `background-origin: border-box;`;
 				style += `opacity: ${styling.selFilterBgImageOpacity}%;`;
 			}
 			if (!styling.selFilterBgImageIsOn || styling.selBgColorIsOn) {
