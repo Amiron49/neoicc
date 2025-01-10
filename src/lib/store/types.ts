@@ -104,6 +104,9 @@ type Styling = {
 	selFilterSepia: number;
 	selBgColorIsOn: boolean;
 	selFilterBgColor: string;
+	selFilterBgImage: string;
+	selFilterBgImageOpacity: number;
+	selFilterBgImageIsOn: boolean;
 	selBorderColorIsOn: boolean;
 	selCTextColorIsOn: boolean;
 	selCTitleColorIsOn: boolean;

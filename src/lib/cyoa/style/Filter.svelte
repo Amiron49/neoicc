@@ -5,6 +5,7 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import { Switch } from '$lib/components/ui/switch';
 	import WrappedStyle from '$lib/components/wrapped/WrappedStyle.svelte';
+	import WrappedImageInput from '$lib/components/wrapped/WrappedImageInput.svelte';
 	import { app } from '$lib/store/store.svelte';
 	import type { Object, Row } from '$lib/store/types';
 	import { pi } from '$lib/store/utils';
@@ -84,20 +85,53 @@
 					<div class="flex flex-col gap-y-2">
 						<div class="flex flex-col gap-y-2">
 							<div class="flex flex-row items-center gap-x-1">
+								<Label for="styling-sel-bg-type-switch">Use Image Background</Label>
+								<Checkbox
+									bind:checked={() => styling.selFilterBgImageIsOn ?? false,
+									(v) => (styling.selFilterBgImageIsOn = v)}
+								/>
+							</div>
+							<div class="flex flex-row items-center gap-x-1">
 								<Label for="styling-sel-bg-color-switch">Background Color</Label>
 								<Checkbox
 									bind:checked={() => styling.selBgColorIsOn ?? false,
 									(v) => (styling.selBgColorIsOn = v)}
 								/>
 							</div>
-							<ColorPicker
-								bind:hex={() => styling.selFilterBgColor ?? '#70FF7EFF',
-								(v) => (styling.selFilterBgColor = v)}
-								components={ChromeVariant}
-								sliderDirection="horizontal"
-								isDialog={false}
-								isAlpha
-							/>
+							{#if styling.selBgColorIsOn}
+								<ColorPicker
+									bind:hex={() => styling.selFilterBgColor ?? '#70FF7EFF',
+									(v) => (styling.selFilterBgColor = v)}
+									components={ChromeVariant}
+									sliderDirection="horizontal"
+									isDialog={false}
+									isAlpha
+								/>
+							{/if}
+							{#if styling.selFilterBgImageIsOn}
+								<div class="flex flex-col gap-y-2">
+									<WrappedImageInput
+										id="selected-bg-image-input"
+										label="Background Image"
+										bind:value={styling.selFilterBgImage}
+									/>
+									{#if styling.selFilterBgImage}
+										<div class="flex flex-row items-center gap-x-1">
+											<Label for="styling-sel-bg-image-opacity">Image Opacity</Label>
+											<Input
+												class="max-w-24"
+												id="styling-sel-bg-image-opacity"
+												type="number"
+												min="0"
+												max="100"
+												bind:value={() => pi(styling.selFilterBgImageOpacity ?? 100),
+												(v) => (styling.selFilterBgImageOpacity = v)}
+											/>
+											<span>%</span>
+										</div>
+									{/if}
+								</div>
+							{/if}
 						</div>
 						<div class="flex flex-col gap-y-2">
 							<div class="flex flex-row items-center gap-x-1">

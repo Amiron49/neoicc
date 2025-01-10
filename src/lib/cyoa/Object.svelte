@@ -143,8 +143,16 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 		}
 		if (styling.objectBgColorIsOn) style += `background-color: ${styling.objectBgColor};`;
 		style += `margin: ${styling.objectMargin}px;`;
-		if (object.isActive || (object.isImageUpload && object.image.length > 0))
-			style += `background-color: ${styling.selFilterBgColor};`;
+		if (object.isActive || (object.isImageUpload && object.image.length > 0)) {
+			if (styling.selFilterBgImageIsOn && styling.selFilterBgImage) {
+				style += `background-image: url("${styling.selFilterBgImage}");`;
+				style += `background-repeat: repeat;`;
+				style += `opacity: ${styling.selFilterBgImageOpacity}%;`;
+			}
+			if (!styling.selFilterBgImageIsOn || styling.selBgColorIsOn) {
+				style += `background-color: ${styling.selFilterBgColor};`;
+			}
+		}
 
 		// Border Radius
 		const suffix = styling.objectBorderRadiusIsPixels ? 'px' : '%';
