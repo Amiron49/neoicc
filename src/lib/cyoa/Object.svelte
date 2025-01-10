@@ -161,8 +161,12 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 
 		if (styling.objectOverflowIsOn) style += `overflow: hidden;`;
 
-		if (styling.objectBorderIsOn)
-			style += `border: ${styling.objectBorderWidth}px ${styling.objectBorderStyle} ${styling.objectBorderColor};`;
+		if (styling.objectBorderIsOn || (object.isActive && styling.selBorderColorIsOn))
+			style += `border: ${styling.objectBorderWidth}px ${styling.objectBorderStyle} ${
+				object.isActive && styling.selBorderColorIsOn 
+					? styling.selFilterBorderColor 
+					: styling.objectBorderColor
+			};`;
 
 		// Styles here the drop-shadow.
 		let filter = '';
