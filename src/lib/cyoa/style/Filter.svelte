@@ -116,6 +116,23 @@
 								isAlpha
 							/>
 						</div>
+						<div class="flex flex-col gap-y-2">
+							<div class="flex flex-row items-center gap-x-1">
+								<Label for="styling-sel-text-color-switch">Text Color</Label>
+								<Checkbox
+									bind:checked={() => styling.selCTextColorIsOn ?? false,
+									(v) => (styling.selCTextColorIsOn = v)}
+								/>
+							</div>
+							<ColorPicker
+								bind:hex={() => styling.selFilterCTextColor ?? '#000000FF',
+								(v) => (styling.selFilterCTextColor = v)}
+								components={ChromeVariant}
+								sliderDirection="horizontal"
+								isDialog={false}
+								isAlpha
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

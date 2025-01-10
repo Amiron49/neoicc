@@ -105,6 +105,7 @@ type Styling = {
 	selBgColorIsOn: boolean;
 	selFilterBgColor: string;
 	selBorderColorIsOn: boolean;
+	selCTextColorIsOn: boolean;
 
 	// Required Filter
 	reqFilterBlurIsOn: boolean;

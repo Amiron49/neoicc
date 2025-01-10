@@ -468,7 +468,13 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 			style:font-family={styling.objectText}
 			style:text-align={styling.objectTextAlign}
 			style:font-size={`${styling.objectTextTextSize}%`}
-			style:color={styling.objectTextColor}
+			style:color={
+				!checkRequireds(object) && styling.reqCTextColorIsOn 
+					? styling.reqFilterCTextColor 
+					: (object.isActive && styling.selCTextColorIsOn 
+						? styling.selFilterCTextColor 
+						: styling.objectTextColor)
+			}
 			style:padding={`${styling.objectTextPadding}px`}
 		>
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
