@@ -397,7 +397,13 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 		style:font-family={styling.objectTitle}
 		style:font-size={`${styling.objectTitleTextSize}%`}
 		style:text-align={styling.objectTitleAlign}
-		style:color={styling.objectTitleColor}
+		style:color={
+			!checkRequireds(object) && styling.reqCTitleColorIsOn 
+				? styling.reqFilterCTitleColor 
+				: (object.isActive && styling.selCTitleColorIsOn 
+					? styling.selFilterCTitleColor 
+					: styling.objectTitleColor)
+		}
 	>
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html DOMPurify.sanitize(replaceObjectTitleText)}

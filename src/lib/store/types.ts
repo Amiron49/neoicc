@@ -106,6 +106,7 @@ type Styling = {
 	selFilterBgColor: string;
 	selBorderColorIsOn: boolean;
 	selCTextColorIsOn: boolean;
+	selCTitleColorIsOn: boolean;
 
 	// Required Filter
 	reqFilterBlurIsOn: boolean;
@@ -129,6 +130,9 @@ type Styling = {
 	reqBgColorIsOn: boolean;
 	reqFilterBgColor: string;
 	reqFilterVisibleIsOn: boolean;
+	reqCTextColorIsOn: boolean;
+	reqCTitleColorIsOn: boolean;
+	reqFilterCTitleColor: string;
 
 	objectDesignIsAdvanced?: boolean;
 	rowDesignIsAdvanced?: boolean;
@@ -155,7 +159,6 @@ type Styling = {
 	selFilterATitleColor?: string;
 	selFilterATextColor?: string;
 	reqFilterBorderColor?: string;
-	reqFilterCTitleColor?: string;
 	reqFilterCTextColor?: string;
 	reqFilterATitleColor?: string;
 	reqFilterATextColor?: string;

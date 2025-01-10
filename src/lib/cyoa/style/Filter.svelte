@@ -133,6 +133,23 @@
 								isAlpha
 							/>
 						</div>
+						<div class="flex flex-col gap-y-2">
+							<div class="flex flex-row items-center gap-x-1">
+								<Label for="styling-sel-title-color-switch">Title Color</Label>
+								<Checkbox
+									bind:checked={() => styling.selCTitleColorIsOn ?? false,
+									(v) => (styling.selCTitleColorIsOn = v)}
+								/>
+							</div>
+							<ColorPicker
+								bind:hex={() => styling.selFilterCTitleColor ?? '#000000FF',
+								(v) => (styling.selFilterCTitleColor = v)}
+								components={ChromeVariant}
+								sliderDirection="horizontal"
+								isDialog={false}
+								isAlpha
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -170,6 +187,42 @@
 							isDialog={false}
 							isAlpha
 						/>
+						<div class="flex flex-col gap-y-2">
+							<div class="flex flex-row items-center gap-x-1">
+								<Label for="styling-req-text-color-switch">Text Color</Label>
+								<Checkbox
+									bind:checked={() => styling.reqCTextColorIsOn ?? false,
+									(v) => (styling.reqCTextColorIsOn = v)}
+									disabled={styling.reqFilterVisibleIsOn}
+								/>
+							</div>
+							<ColorPicker
+								bind:hex={() => styling.reqFilterCTextColor ?? '#000000FF',
+								(v) => (styling.reqFilterCTextColor = v)}
+								components={ChromeVariant}
+								sliderDirection="horizontal"
+								isDialog={false}
+								isAlpha
+							/>
+						</div>
+						<div class="flex flex-col gap-y-2">
+							<div class="flex flex-row items-center gap-x-1">
+								<Label for="styling-req-title-color-switch">Title Color</Label>
+								<Checkbox
+									bind:checked={() => styling.reqCTitleColorIsOn ?? false,
+									(v) => (styling.reqCTitleColorIsOn = v)}
+									disabled={styling.reqFilterVisibleIsOn}
+								/>
+							</div>
+							<ColorPicker
+								bind:hex={() => styling.reqFilterCTitleColor ?? '#000000FF',
+								(v) => (styling.reqFilterCTitleColor = v)}
+								components={ChromeVariant}
+								sliderDirection="horizontal"
+								isDialog={false}
+								isAlpha
+							/>
+						</div>
 					</div>
 				</div>
 				<div class="flex w-full flex-col items-center">
