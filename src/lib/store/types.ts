@@ -104,6 +104,7 @@ type Styling = {
 	selFilterSepia: number;
 	selBgColorIsOn: boolean;
 	selFilterBgColor: string;
+	selBorderColorIsOn: boolean;
 
 	// Required Filter
 	reqFilterBlurIsOn: boolean;

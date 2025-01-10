@@ -82,21 +82,40 @@
 						{@render Option('Grayscale', 'selFilterGray', 'selFilterGrayIsOn', '%')}
 					</div>
 					<div class="flex flex-col gap-y-2">
-						<div class="flex flex-row items-center gap-x-1">
-							<Label for="styling-sel-bg-color-switch">Background Color</Label>
-							<Checkbox
-								bind:checked={() => styling.selBgColorIsOn ?? false,
-								(v) => (styling.selBgColorIsOn = v)}
+						<div class="flex flex-col gap-y-2">
+							<div class="flex flex-row items-center gap-x-1">
+								<Label for="styling-sel-bg-color-switch">Background Color</Label>
+								<Checkbox
+									bind:checked={() => styling.selBgColorIsOn ?? false,
+									(v) => (styling.selBgColorIsOn = v)}
+								/>
+							</div>
+							<ColorPicker
+								bind:hex={() => styling.selFilterBgColor ?? '#70FF7EFF',
+								(v) => (styling.selFilterBgColor = v)}
+								components={ChromeVariant}
+								sliderDirection="horizontal"
+								isDialog={false}
+								isAlpha
 							/>
 						</div>
-						<ColorPicker
-							bind:hex={() => styling.selFilterBgColor ?? '#70FF7EFF',
-							(v) => (styling.selFilterBgColor = v)}
-							components={ChromeVariant}
-							sliderDirection="horizontal"
-							isDialog={false}
-							isAlpha
-						/>
+						<div class="flex flex-col gap-y-2">
+							<div class="flex flex-row items-center gap-x-1">
+								<Label for="styling-sel-border-color-switch">Border Color</Label>
+								<Checkbox
+									bind:checked={() => styling.selBorderColorIsOn ?? false,
+									(v) => (styling.selBorderColorIsOn = v)}
+								/>
+							</div>
+							<ColorPicker
+								bind:hex={() => styling.selFilterBorderColor ?? '#000000FF',
+								(v) => (styling.selFilterBorderColor = v)}
+								components={ChromeVariant}
+								sliderDirection="horizontal"
+								isDialog={false}
+								isAlpha
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
