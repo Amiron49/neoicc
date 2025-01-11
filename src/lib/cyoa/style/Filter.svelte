@@ -129,6 +129,32 @@
 											/>
 											<span>%</span>
 										</div>
+										<div class="flex flex-row items-center gap-x-1">
+											<Label for="styling-sel-bg-image-position">Image Position</Label>
+											<select
+												id="styling-sel-bg-image-position"
+												class="rounded border p-1"
+												bind:value={styling.selFilterBgImagePosition}
+											>
+												<option value="0% 0%">Top Left</option>
+												<option value="100% 0%">Top Right</option>
+												<option value="0% 100%">Bottom Left</option>
+												<option value="100% 100%">Bottom Right</option>
+												<option value="50% 50%">Center</option>
+											</select>
+										</div>
+										<div class="flex flex-row items-center gap-x-1">
+											<Label for="styling-sel-bg-image-repeat">Image Repeat</Label>
+											<select
+												id="styling-sel-bg-image-repeat"
+												class="rounded border p-1"
+												bind:value={styling.selFilterBgImageRepeat}
+											>
+												<option value="repeat">Repeat</option>
+												<option value="round">Cover</option>
+												<option value="no-repeat">No-repeat</option>
+											</select>
+										</div>
 									{/if}
 								</div>
 							{/if}

@@ -138,7 +138,7 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 		if (!object.isActive) {
 			if (styling.objectBackgroundImage) {
 				style += `background-image: url("${styling.objectBackgroundImage}");`;
-				style += `background-repeat: repeat;`;
+				style += `background-repeat: ${styling.selFilterBgImageRepeat};`;
 			}
 		}
 		if (styling.objectBgColorIsOn) style += `background-color: ${styling.objectBgColor};`;
@@ -146,12 +146,12 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 		if (object.isActive || (object.isImageUpload && object.image.length > 0)) {
 			if (styling.selFilterBgImageIsOn && styling.selFilterBgImage) {
 				style += `background-image: url("${styling.selFilterBgImage}");`;
-				style += `background-repeat: repeat;`;
-				style += `background-position: right bottom;`;
+				style += `background-repeat: ${styling.selFilterBgImageRepeat};`;
+				style += `background-position: ${styling.selFilterBgImagePosition};`;
 				style += `background-origin: border-box;`;
 				style += `opacity: ${styling.selFilterBgImageOpacity}%;`;
-			}
-			if (!styling.selFilterBgImageIsOn || styling.selBgColorIsOn) {
+				style += `filter: blur(${styling.selFilterBlur}px) brightness(${styling.selFilterBright}%) contrast(${styling.selFilterCont}%) grayscale(${styling.selFilterGray}%) hue-rotate(${styling.selFilterHue}deg) invert(${styling.selFilterInvert}%) saturate(${styling.selFilterSatur}) sepia(${styling.selFilterSepia}%);`;
+			} else if (styling.selBgColorIsOn) {
 				style += `background-color: ${styling.selFilterBgColor};`;
 			}
 		}

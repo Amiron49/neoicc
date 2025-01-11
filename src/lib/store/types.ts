@@ -107,6 +107,8 @@ type Styling = {
 	selFilterBgImage: string;
 	selFilterBgImageOpacity: number;
 	selFilterBgImageIsOn: boolean;
+	selFilterBgImagePosition: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+	selFilterBgImageRepeat: string;
 	selBorderColorIsOn: boolean;
 	selCTextColorIsOn: boolean;
 	selCTitleColorIsOn: boolean;
