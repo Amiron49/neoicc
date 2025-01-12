@@ -21,6 +21,35 @@
 		$props();
 
 	const styling = $derived(from === 'private' ? (obj?.styling ?? app.styling) : app.styling);
+
+	import { writable } from 'svelte/store';
+
+	// New array to store multiple background images
+	const backgroundImages = writable<string[]>([styling.selFilterBgImage || '']);
+
+	// Function to randomly select a background image
+	function getRandomBackgroundImage(images: string[]): string {
+		if (images.length === 0) return '';
+		const randomIndex = Math.floor(Math.random() * images.length);
+		return images[randomIndex];
+	}
+
+	// Update styling when backgroundImages change
+	$effect(() => {
+		if ($backgroundImages.length > 0) {
+			styling.selFilterBgImage = getRandomBackgroundImage($backgroundImages);
+		}
+	});
+
+	// Function to add a new image input
+	function addImageInput() {
+		backgroundImages.update(images => [...images, '']);
+	}
+
+	// Function to remove an image input
+	function removeImageInput(index: number) {
+		backgroundImages.update(images => images.filter((_, i) => i !== index));
+	}
 </script>
 
 {#snippet Option(
@@ -110,12 +139,28 @@
 							{/if}
 							{#if styling.selFilterBgImageIsOn}
 								<div class="flex flex-col gap-y-2">
-									<WrappedImageInput
-										id="selected-bg-image-input"
-										label="Background Image"
-										bind:value={styling.selFilterBgImage}
-									/>
-									{#if styling.selFilterBgImage}
+									{#each $backgroundImages as _, index}
+										<div class="flex flex-row items-center gap-x-2">
+											<WrappedImageInput
+												id="selected-bg-image-input-{index}"
+												label="Background Image {index + 1}"
+												bind:value={$backgroundImages[index]}
+											/>
+											{#if index > 0}
+												<button
+													class="text-red-500"
+													on:click={() => removeImageInput(index)}>X</button
+												>
+											{/if}
+										</div>
+									{/each}
+									{#if $backgroundImages.length < 10}
+										<button
+											class="text-blue-500"
+											on:click={addImageInput}>Add Another Image</button
+										>
+									{/if}
+									{#if $backgroundImages[0]}
 										<div class="flex flex-row items-center gap-x-1">
 											<Label for="styling-sel-bg-image-opacity">Image Opacity</Label>
 											<Input
