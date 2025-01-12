@@ -166,14 +166,14 @@ $effect(() => {
 											/>
 											<button
 												class="text-red-500"
-												on:click={() => removeImageInput(index)}>X</button
+												onclick={() => removeImageInput(index)}>X</button
 											>
 										</div>
 									{/each}
 									{#if $backgroundImages.length < 10}
 										<button
 											class="text-blue-500"
-											on:click={addImageInput}>Add Another Image</button
+											onclick={addImageInput}>Add Another Image</button
 										>
 									{/if}
 									{#if $backgroundImages[0]}
