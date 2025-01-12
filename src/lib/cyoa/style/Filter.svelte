@@ -22,34 +22,52 @@
 
 	const styling = $derived(from === 'private' ? (obj?.styling ?? app.styling) : app.styling);
 
-	import { writable } from 'svelte/store';
+import { backgroundImages, getRandomBackgroundImage } from './backgroundImageUtils';
 
-	// New array to store multiple background images
-	const backgroundImages = writable<string[]>([styling.selFilterBgImage || '']);
-
-	// Function to randomly select a background image
-	function getRandomBackgroundImage(images: string[]): string {
-		if (images.length === 0) return '';
-		const randomIndex = Math.floor(Math.random() * images.length);
-		return images[randomIndex];
+// Update styling when backgroundImages change
+$effect(() => {
+	if ($backgroundImages.length > 0) {
+		styling.selFilterBgImage = getRandomBackgroundImage($backgroundImages);
 	}
+});
 
-	// Update styling when backgroundImages change
-	$effect(() => {
-		if ($backgroundImages.length > 0) {
-			styling.selFilterBgImage = getRandomBackgroundImage($backgroundImages);
+// Initialize backgroundImages after styling is defined
+$effect(() => {
+	if ($backgroundImages.length === 0) {
+		backgroundImages.set([styling.selFilterBgImage || '']);
+	}
+});
+
+// Function to add a new image input
+function addImageInput() {
+	backgroundImages.update(images => {
+		console.log('Adding new image input. Current images:', images);
+		if (images.length < 10) {
+			return [...images, ''];
 		}
+		return images;
 	});
+}
 
-	// Function to add a new image input
-	function addImageInput() {
-		backgroundImages.update(images => [...images, '']);
-	}
+// Function to remove an image input
+function removeImageInput(index: number) {
+	backgroundImages.update(images => {
+		console.log('Removing image input at index:', index, 'Current images:', images);
+		return images.filter((_, i) => i !== index);
+	});
+}
 
-	// Function to remove an image input
-	function removeImageInput(index: number) {
-		backgroundImages.update(images => images.filter((_, i) => i !== index));
-	}
+// Function to update an image input
+function updateImageInput(index: number, value: string) {
+	backgroundImages.update(images => {
+		console.log('Updating image input at index:', index, 'New value:', value, 'Current images:', images);
+		return images.map((img, i) => i === index ? value : img);
+	});
+}
+
+$effect(() => {
+	console.log('Current backgroundImages:', $backgroundImages);
+});
 </script>
 
 {#snippet Option(
@@ -139,19 +157,17 @@
 							{/if}
 							{#if styling.selFilterBgImageIsOn}
 								<div class="flex flex-col gap-y-2">
-									{#each $backgroundImages as _, index}
+									{#each $backgroundImages as image, index}
 										<div class="flex flex-row items-center gap-x-2">
 											<WrappedImageInput
 												id="selected-bg-image-input-{index}"
 												label="Background Image {index + 1}"
 												bind:value={$backgroundImages[index]}
 											/>
-											{#if index > 0}
-												<button
-													class="text-red-500"
-													on:click={() => removeImageInput(index)}>X</button
-												>
-											{/if}
+											<button
+												class="text-red-500"
+												on:click={() => removeImageInput(index)}>X</button
+											>
 										</div>
 									{/each}
 									{#if $backgroundImages.length < 10}

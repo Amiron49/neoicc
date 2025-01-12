@@ -22,8 +22,9 @@
 	import { app, appMetaState } from '$lib/store/store.svelte';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import * as Accordion from '$lib/components/ui/accordion';
-import ObjectScore from './object/ObjectScore.svelte';
-import { Checkbox } from '$lib/components/ui/checkbox';
+	import ObjectScore from './object/ObjectScore.svelte';
+	import { Checkbox } from '$lib/components/ui/checkbox';
+	import { getRandomBackgroundImage, backgroundImages } from './style/backgroundImageUtils';
 import {
 	activateObject,
 	checkRequireds,
@@ -145,7 +146,8 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 		style += `margin: ${styling.objectMargin}px;`;
 		if (object.isActive || (object.isImageUpload && object.image.length > 0)) {
 			if (styling.selFilterBgImageIsOn && styling.selFilterBgImage) {
-				style += `background-image: url("${styling.selFilterBgImage}");`;
+				const randomBackgroundImage = getRandomBackgroundImage($backgroundImages);
+				style += `background-image: url("${randomBackgroundImage}");`;
 				style += `background-repeat: ${styling.selFilterBgImageRepeat};`;
 				style += `background-position: ${styling.selFilterBgImagePosition};`;
 				style += `background-origin: border-box;`;
