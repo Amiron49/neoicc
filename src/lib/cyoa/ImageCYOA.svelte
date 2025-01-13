@@ -145,8 +145,10 @@ import { backgroundImages } from './style/backgroundImageUtils';
 	}
 	] as const;
 
+	import { base } from '$app/paths';
+
 	onMount(() => {
-		fetch('/project.json')
+		fetch(`${base}/project.json`)
 			.then((r) => r.json())
 			.then(loadApp)
 			.catch((e) => console.info(`No local project.json found: ${e}`));
