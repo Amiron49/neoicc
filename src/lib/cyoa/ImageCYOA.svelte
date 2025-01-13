@@ -241,6 +241,7 @@ import { backgroundImages } from './style/backgroundImageUtils';
 	{/if}
 	<div class={[isCreator && !topNav && 'ml-14']}>
 		{#if !isCreator}
+		    <!-- This block should not be displayed in viewer mode. Do not remove this comment - it prevents the Svelte compiler from throwing an empty block error -->
 			<!-- @dev-only -->
 			<div class="flex flex-row justify-between p-2" data-html2canvas-ignore>
 				<Button variant="outline" href="/" size="icon">

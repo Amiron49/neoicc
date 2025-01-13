@@ -1,5 +1,7 @@
 import adapter from '@sveltejs/adapter-static';
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'; 
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import fs from 'fs';
+import path from 'path';
 
 function removeDevCode(content) {
     content = content.replace(/\/\/ @dev-only\s*\n.*?\n}/gs, '');
@@ -36,6 +38,9 @@ const config = {
     ],
 
     kit: { 
+        files: {
+            routes: process.env.BUILD_TYPE === 'viewer' ? 'src/routes-viewer' : 'src/routes',
+        },
         paths: {
             base: process.env.BASE_PATH || '',
             relative: true
@@ -46,7 +51,23 @@ const config = {
             assets: process.env.BUILD_TYPE === 'viewer' ? 'build-viewer' : 'build',
             fallback: undefined,
             precompress: false,
-            strict: true
+            strict: true,
+            async writeAdapter(builder) {
+                await builder.writeClient();
+                await builder.writePrerendered();
+
+                if (process.env.BUILD_TYPE === 'viewer') {
+                    const viewerIndexPath = path.join(builder.getClientDirectory(), 'viewer', 'index.html');
+                    const rootIndexPath = path.join(builder.getClientDirectory(), 'index.html');
+
+                    if (fs.existsSync(viewerIndexPath)) {
+                        fs.copyFileSync(viewerIndexPath, rootIndexPath);
+                        console.log('Copied viewer/index.html to root index.html');
+                    } else {
+                        console.error('viewer/index.html not found');
+                    }
+                }
+            }
         })
     }
 };
