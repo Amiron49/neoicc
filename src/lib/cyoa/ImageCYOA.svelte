@@ -32,22 +32,23 @@
 	import Design from './Design.svelte';
 	import IDSearch from './features/IDSearch.svelte';
 	import type { App } from '$lib/store/types';
-	import { onMount } from 'svelte';
-	import { innerWidth } from 'svelte/reactivity/window';
-	import Row from './Row.svelte';
-	import DOMPurify from 'dompurify';
-	import { goto } from '$app/navigation';
-	import Filter from './style/Filter.svelte';
-	import Background from './style/Background.svelte';
-	import MultiChoice from './style/MultiChoice.svelte';
-	import ObjectDesign from './style/ObjectDesign.svelte';
-	import ObjectImage from './style/ObjectImage.svelte';
-	import PointBar from './style/PointBar.svelte';
-	import RowDesign from './style/RowDesign.svelte';
-	import RowImage from './style/RowImage.svelte';
-	import Backpack from './style/Backpack.svelte';
-	import Text from './style/Text.svelte';
-	import { printDiv } from '$lib/utils';
+import { onMount } from 'svelte';
+import { innerWidth } from 'svelte/reactivity/window';
+import Row from './Row.svelte';
+import DOMPurify from 'dompurify';
+import { goto } from '$app/navigation';
+import Filter from './style/Filter.svelte';
+import Background from './style/Background.svelte';
+import MultiChoice from './style/MultiChoice.svelte';
+import ObjectDesign from './style/ObjectDesign.svelte';
+import ObjectImage from './style/ObjectImage.svelte';
+import PointBar from './style/PointBar.svelte';
+import RowDesign from './style/RowDesign.svelte';
+import RowImage from './style/RowImage.svelte';
+import Backpack from './style/Backpack.svelte';
+import Text from './style/Text.svelte';
+import { printDiv } from '$lib/utils';
+import { backgroundImages } from './style/backgroundImageUtils';
 
 	const { isCreator }: { isCreator: boolean } = $props();
 
@@ -65,6 +66,13 @@
 		| 'appConfirm'
 	>('none');
 	let topNav = $state(false);
+
+	onMount(() => {
+		if (app.styling.selFilterBgImages) {
+			backgroundImages.set([...app.styling.selFilterBgImages]);
+			console.log('Initial backgroundImages in ImageCYOA:', app.styling.selFilterBgImages);
+		}
+	});
 
 	const navButtons = [
 		{
@@ -126,11 +134,15 @@
 			component: Brush,
 			action: () => (modal = 'appDesign')
 		},
-		{
-			text: 'Save/Load Project',
-			component: Save,
-			action: () => (modal = 'appLoad')
+	{
+		text: 'Save/Load Project',
+		component: Save,
+		action: () => {
+			console.log('Save/Load Project button clicked');
+			modal = 'appLoad';
+			console.log('Modal state after click:', modal);
 		}
+	}
 	] as const;
 
 	onMount(() => {

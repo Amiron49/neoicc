@@ -9,8 +9,17 @@
 	import type { App } from '$lib/store/types';
 	import { base64ToBlob } from '$lib/utils';
 	import JSZip from 'jszip';
+	import { onMount } from 'svelte';
 
 	const { open, onclose }: { open: boolean; onclose: () => void } = $props();
+
+	onMount(() => {
+		console.log('Load component mounted, open state:', open);
+	});
+
+	$effect(() => {
+		console.log('Load component open state changed:', open);
+	});
 
 	// Loads the file when the file input is changed.
 	function uploadFile(files: FileList | null) {
@@ -83,6 +92,13 @@
 			tempApp.styling.rowBorderImage = saveImage(tempApp.styling.rowBorderImage, 'images/RB');
 		if (tempApp.styling.objectBorderImage)
 			tempApp.styling.objectBorderImage = saveImage(tempApp.styling.objectBorderImage, 'images/OB');
+
+		// Save background images for activated objects
+		if (tempApp.styling.backgroundImages) {
+			tempApp.styling.backgroundImages = tempApp.styling.backgroundImages.map((img, index) =>
+				saveImage(img, `images/ActivatedBg_${index}`)
+			);
+		}
 
 		// Row image
 		for (let i = 0; i < tempApp.rows.length; i++) {

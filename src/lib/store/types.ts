@@ -7,6 +7,9 @@ type Styling = {
 	addonTitle: string; // The font for the object-titles.
 	addonText: string; // The font for the object-under-text.
 
+	// Background images for activated objects
+	backgroundImages: string[];
+
 	// Size for the text.
 	rowTitleTextSize: number | string;
 	rowTextTextSize: number | string;
@@ -104,7 +107,7 @@ type Styling = {
 	selFilterSepia: number;
 	selBgColorIsOn: boolean;
 	selFilterBgColor: string;
-	selFilterBgImage: string;
+	selFilterBgImages: string[];
 	selFilterBgImageOpacity: number;
 	selFilterBgImageIsOn: boolean;
 	selFilterBgImagePosition: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';

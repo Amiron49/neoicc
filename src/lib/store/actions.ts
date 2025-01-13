@@ -2,6 +2,7 @@
 import { app } from './store.svelte';
 import type { App, Backpack, Object, PointType, Requireds, Row } from './types';
 import { pi } from './utils';
+import { backgroundImages } from '../cyoa/style/backgroundImageUtils';
 
 function toast(message: string) {
 	console.log(message);
@@ -1261,5 +1262,15 @@ export function loadApp(n: App) {
 		} else {
 			(app as { [key in keyof typeof app]: unknown })[key] = n[key];
 		}
+	}
+
+	// Handle backgroundImages
+	if (n.styling && Array.isArray(n.styling.selFilterBgImages) && n.styling.selFilterBgImages.length > 0) {
+		app.styling.selFilterBgImages = [...n.styling.selFilterBgImages];
+		// Update the backgroundImages store
+		backgroundImages.set(app.styling.selFilterBgImages);
+		console.log('Loaded background images:', JSON.stringify(app.styling.selFilterBgImages));
+	} else {
+		console.log('No background images found in loaded data');
 	}
 }

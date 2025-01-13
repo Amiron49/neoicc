@@ -24,50 +24,47 @@
 
 import { backgroundImages, getRandomBackgroundImage } from './backgroundImageUtils';
 
-// Update styling when backgroundImages change
-$effect(() => {
-	if ($backgroundImages.length > 0) {
-		styling.selFilterBgImage = getRandomBackgroundImage($backgroundImages);
+import { onMount } from 'svelte';
+
+import { get } from 'svelte/store';
+
+// Initialize and sync backgroundImages store with styling.selFilterBgImages
+onMount(() => {
+	if (!styling.selFilterBgImages) {
+		styling.selFilterBgImages = [];
+	}
+	if (get(backgroundImages).length === 0) {
+		backgroundImages.set([...styling.selFilterBgImages]); 
 	}
 });
 
-// Initialize backgroundImages after styling is defined
 $effect(() => {
-	if ($backgroundImages.length === 0) {
-		backgroundImages.set([styling.selFilterBgImage || '']);
+	if (styling.selFilterBgImages && styling.selFilterBgImages.length > 0) {
+		const currentBackgroundImages = get(backgroundImages);
+		if (JSON.stringify(currentBackgroundImages) !== JSON.stringify(styling.selFilterBgImages)) {
+			backgroundImages.set([...styling.selFilterBgImages]); 
+		}
 	}
 });
 
 // Function to add a new image input
 function addImageInput() {
-	backgroundImages.update(images => {
-		console.log('Adding new image input. Current images:', images);
-		if (images.length < 10) {
-			return [...images, ''];
-		}
-		return images;
-	});
+	if (styling.selFilterBgImages.length < 10) {
+		styling.selFilterBgImages = [...styling.selFilterBgImages, '']; 
+	}
 }
 
 // Function to remove an image input
 function removeImageInput(index: number) {
-	backgroundImages.update(images => {
-		console.log('Removing image input at index:', index, 'Current images:', images);
-		return images.filter((_, i) => i !== index);
-	});
+	styling.selFilterBgImages = styling.selFilterBgImages.filter((_, i) => i !== index); 
 }
 
 // Function to update an image input
 function updateImageInput(index: number, value: string) {
-	backgroundImages.update(images => {
-		console.log('Updating image input at index:', index, 'New value:', value, 'Current images:', images);
-		return images.map((img, i) => i === index ? value : img);
-	});
+	styling.selFilterBgImages = styling.selFilterBgImages.map((img, i) => i === index ? value : img); 
 }
 
-$effect(() => {
-	console.log('Current backgroundImages:', $backgroundImages);
-});
+ 
 </script>
 
 {#snippet Option(
@@ -157,12 +154,12 @@ $effect(() => {
 							{/if}
 							{#if styling.selFilterBgImageIsOn}
 								<div class="flex flex-col gap-y-2">
-									{#each $backgroundImages as image, index}
+									{#each styling.selFilterBgImages as image, index}
 										<div class="flex flex-row items-center gap-x-2">
 											<WrappedImageInput
 												id="selected-bg-image-input-{index}"
 												label="Background Image {index + 1}"
-												bind:value={$backgroundImages[index]}
+												bind:value={styling.selFilterBgImages[index]}
 											/>
 											<button
 												class="text-red-500"
@@ -170,13 +167,13 @@ $effect(() => {
 											>
 										</div>
 									{/each}
-									{#if $backgroundImages.length < 10}
+									{#if styling.selFilterBgImages.length < 10}
 										<button
 											class="text-blue-500"
 											onclick={addImageInput}>Add Another Image</button
 										>
 									{/if}
-									{#if $backgroundImages[0]}
+									{#if styling.selFilterBgImages[0]}
 										<div class="flex flex-row items-center gap-x-1">
 											<Label for="styling-sel-bg-image-opacity">Image Opacity</Label>
 											<Input
