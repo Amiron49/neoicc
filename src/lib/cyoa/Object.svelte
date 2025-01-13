@@ -145,15 +145,15 @@ import ObjectSettings from './object/ObjectSettings.svelte';
 		if (styling.objectBgColorIsOn) style += `background-color: ${styling.objectBgColor};`;
 		style += `margin: ${styling.objectMargin}px;`;
 		if (object.isActive || (object.isImageUpload && object.image.length > 0)) {
-			if (styling.selFilterBgImageIsOn && styling.selFilterBgImage) {
-				const randomBackgroundImage = getRandomBackgroundImage($backgroundImages);
-				style += `background-image: url("${randomBackgroundImage}");`;
-				style += `background-repeat: ${styling.selFilterBgImageRepeat};`;
-				style += `background-position: ${styling.selFilterBgImagePosition};`;
-				style += `background-origin: border-box;`;
-				style += `opacity: ${styling.selFilterBgImageOpacity}%;`;
-				style += `filter: blur(${styling.selFilterBlur}px) brightness(${styling.selFilterBright}%) contrast(${styling.selFilterCont}%) grayscale(${styling.selFilterGray}%) hue-rotate(${styling.selFilterHue}deg) invert(${styling.selFilterInvert}%) saturate(${styling.selFilterSatur}) sepia(${styling.selFilterSepia}%);`;
-			} else if (styling.selBgColorIsOn) {
+		if (styling.selFilterBgImageIsOn && styling.selFilterBgImages && styling.selFilterBgImages.length > 0) {
+			const randomBackgroundImage = getRandomBackgroundImage(styling.selFilterBgImages, object.id);
+			style += `background-image: url("${randomBackgroundImage}");`;
+			style += `background-repeat: ${styling.selFilterBgImageRepeat};`;
+			style += `background-position: ${styling.selFilterBgImagePosition};`;
+			style += `background-origin: border-box;`;
+			style += `opacity: ${styling.selFilterBgImageOpacity}%;`;
+			style += `filter: blur(${styling.selFilterBlur}px) brightness(${styling.selFilterBright}%) contrast(${styling.selFilterCont}%) grayscale(${styling.selFilterGray}%) hue-rotate(${styling.selFilterHue}deg) invert(${styling.selFilterInvert}%) saturate(${styling.selFilterSatur}) sepia(${styling.selFilterSepia}%);`;
+		} else if (styling.selBgColorIsOn) {
 				style += `background-color: ${styling.selFilterBgColor};`;
 			}
 		}
