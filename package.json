@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "bunx --bun vite dev",
-		"build": "bunx --bun vite build",
+		"build": "cross-env BUILD_TYPE=full bunx --bun vite build",
+		"build:viewer": "cross-env BUILD_TYPE=viewer bunx --bun vite build",
 		"preview": "bunx --bun vite preview",
 		"check": "bunx --bun svelte-kit sync && bunx --bun svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "bunx --bun svelte-kit sync && bunx --bun svelte-check --tsconfig ./tsconfig.json --watch",
@@ -25,6 +26,7 @@
 		"bits-ui": "^1.0.0-next.77",
 		"browser-image-compression": "^2.0.2",
 		"clsx": "^2.1.1",
+		"cross-env": "^7.0.3",
 		"dompurify": "^3.2.3",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
