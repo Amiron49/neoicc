@@ -1,3 +1,5 @@
+<!-- we can ingore this warning as this is a one time transformation that happens synchronously before the ui is rendered -->
+<!-- svelte-ignore state_referenced_locally -->
 <script lang="ts">
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { Label } from '$lib/components/ui/label';
@@ -27,6 +29,7 @@
 	const styling = $derived(
 		from === 'private' ? (obj?.styling ?? app.styling) : app.styling
 	) as typeof app.styling;
+	
 	parseStyling(styling);
 	const borderRadiusSuffix = $derived(styling.objectBorderRadiusIsPixels ? 'px' : '%');
 	const borderStyles = [
