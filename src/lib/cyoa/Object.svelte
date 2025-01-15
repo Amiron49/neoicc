@@ -25,15 +25,15 @@
 	import ObjectScore from './object/ObjectScore.svelte';
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { getRandomBackgroundImage, backgroundImages } from './style/backgroundImageUtils';
-import {
-	activateObject,
-	checkRequireds,
-	selectedOneLess,
-	selectedOneMore
-} from '$lib/store/actions';
-import ImageUpload from './row/ImageUpload.svelte';
-import Requirement from './row/Requirement.svelte';
-import ObjectSettings from './object/ObjectSettings.svelte';
+	import {
+		activateObject,
+		checkRequireds,
+		selectedOneLess,
+		selectedOneMore
+	} from '$lib/store/actions';
+	import ImageUpload from './row/ImageUpload.svelte';
+	import Requirement from './row/Requirement.svelte';
+	import ObjectSettings from './object/ObjectSettings.svelte';
 	import ObjectAddon from './object/ObjectAddon.svelte';
 	import ObjectRequirement from './object/ObjectRequirement.svelte';
 	import DOMPurify from 'dompurify';
