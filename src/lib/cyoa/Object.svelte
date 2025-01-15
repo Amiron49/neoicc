@@ -24,6 +24,7 @@
 	import * as Accordion from '$lib/components/ui/accordion';
 	import ObjectScore from './object/ObjectScore.svelte';
 	import { Checkbox } from '$lib/components/ui/checkbox';
+	import { getRandomBackgroundImage, backgroundImages } from './style/backgroundImageUtils';
 	import {
 		activateObject,
 		checkRequireds,
@@ -138,13 +139,24 @@
 		if (!object.isActive) {
 			if (styling.objectBackgroundImage) {
 				style += `background-image: url("${styling.objectBackgroundImage}");`;
-				style += `background-repeat: repeat;`;
+				style += `background-repeat: ${styling.selFilterBgImageRepeat};`;
 			}
 		}
 		if (styling.objectBgColorIsOn) style += `background-color: ${styling.objectBgColor};`;
 		style += `margin: ${styling.objectMargin}px;`;
-		if (object.isActive || (object.isImageUpload && object.image.length > 0))
-			style += `background-color: ${styling.selFilterBgColor};`;
+		if (object.isActive || (object.isImageUpload && object.image.length > 0)) {
+		if (styling.selFilterBgImageIsOn && styling.selFilterBgImages && styling.selFilterBgImages.length > 0) {
+			const randomBackgroundImage = getRandomBackgroundImage(styling.selFilterBgImages, object.id);
+			style += `background-image: url("${randomBackgroundImage}");`;
+			style += `background-repeat: ${styling.selFilterBgImageRepeat};`;
+			style += `background-position: ${styling.selFilterBgImagePosition};`;
+			style += `background-origin: border-box;`;
+			style += `opacity: ${styling.selFilterBgImageOpacity}%;`;
+			style += `filter: blur(${styling.selFilterBlur}px) brightness(${styling.selFilterBright}%) contrast(${styling.selFilterCont}%) grayscale(${styling.selFilterGray}%) hue-rotate(${styling.selFilterHue}deg) invert(${styling.selFilterInvert}%) saturate(${styling.selFilterSatur}) sepia(${styling.selFilterSepia}%);`;
+		} else if (styling.selBgColorIsOn) {
+				style += `background-color: ${styling.selFilterBgColor};`;
+			}
+		}
 
 		// Border Radius
 		const suffix = styling.objectBorderRadiusIsPixels ? 'px' : '%';
@@ -161,8 +173,12 @@
 
 		if (styling.objectOverflowIsOn) style += `overflow: hidden;`;
 
-		if (styling.objectBorderIsOn)
-			style += `border: ${styling.objectBorderWidth}px ${styling.objectBorderStyle} ${styling.objectBorderColor};`;
+		if (styling.objectBorderIsOn || (object.isActive && styling.selBorderColorIsOn))
+			style += `border: ${styling.objectBorderWidth}px ${styling.objectBorderStyle} ${
+				object.isActive && styling.selBorderColorIsOn 
+					? styling.selFilterBorderColor 
+					: styling.objectBorderColor
+			};`;
 
 		// Styles here the drop-shadow.
 		let filter = '';
@@ -393,7 +409,13 @@
 		style:font-family={styling.objectTitle}
 		style:font-size={`${styling.objectTitleTextSize}%`}
 		style:text-align={styling.objectTitleAlign}
-		style:color={styling.objectTitleColor}
+		style:color={
+			!checkRequireds(object) && styling.reqCTitleColorIsOn 
+				? styling.reqFilterCTitleColor 
+				: (object.isActive && styling.selCTitleColorIsOn 
+					? styling.selFilterCTitleColor 
+					: styling.objectTitleColor)
+		}
 	>
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html DOMPurify.sanitize(replaceObjectTitleText)}
@@ -464,7 +486,13 @@
 			style:font-family={styling.objectText}
 			style:text-align={styling.objectTextAlign}
 			style:font-size={`${styling.objectTextTextSize}%`}
-			style:color={styling.objectTextColor}
+			style:color={
+				!checkRequireds(object) && styling.reqCTextColorIsOn 
+					? styling.reqFilterCTextColor 
+					: (object.isActive && styling.selCTextColorIsOn 
+						? styling.selFilterCTextColor 
+						: styling.objectTextColor)
+			}
 			style:padding={`${styling.objectTextPadding}px`}
 		>
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
@@ -476,7 +504,7 @@
 <div class={cn('flex', className)}>
 	<!-- Will only show when the Boolean isEditModeOn is true. -->
 	{#if isCreator && isEditModeOn}
-		<div class="mx-1 mt-2 w-full divide-y rounded border bg-white">
+		<div class="mx-1 mt-2 w-full divide-y rounded border bg-gray-200">
 			<div class="flex flex-row justify-around p-1">
 				{@render TooltipIconButton(ChevronLeft, 'Move Left', () => {
 					const idx = row.objects.indexOf(object);
@@ -515,29 +543,51 @@
 						placeholder="100"
 					/>
 				{/if}
-				{#if object.image.length > 0}
-					<div class="flex w-full flex-col items-center">
-						<button onclick={() => (modal = 'appImageUpload')}>
-							<img
-								class="max-h-44 px-12"
-								src={getImageURL(appMetaState.imagePrefix, object.image)}
-								alt=""
-							/>
+				<div class="flex flex-col items-center gap-y-2">
+					<div class="w-full relative">
+						<button onclick={() => (modal = 'appImageUpload')} class="w-full">
+							{#if object.image}
+								<img
+									class="inline-block h-[250px] w-auto object-contain"
+									src={getImageURL(object.image, appMetaState.imagePrefix)}
+									alt="object"
+									style="max-height: 250px; min-height: 150px;"
+								/>
+							{:else}
+								<div 
+									class="h-[250px] w-full flex items-center justify-center border-2 border-dashed border-gray-300 bg-gray-50"
+									style="max-height: 250px; min-height: 150px;"
+								>
+									<span class="text-gray-500">Set Image</span>
+								</div>
+							{/if}
 						</button>
+						{#if object.image}
+							<button
+								class="absolute top-1 right-1 bg-white/50 hover:bg-white/80 rounded-full w-6 h-6 flex items-center justify-center shadow-sm"
+								onclick={(e) => {
+									e.stopPropagation();
+									object.image = '';
+								}}
+								aria-label="Remove image"
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<line x1="18" y1="6" x2="6" y2="18"></line>
+									<line x1="6" y1="6" x2="18" y2="18"></line>
+								</svg>
+							</button>
+						{/if}
 					</div>
-				{/if}
-				<div>
-					<Button size="lg" onclick={() => (modal = 'appImageUpload')}>Change Image</Button>
 				</div>
 				<div class="mt-1 flex flex-col items-start gap-y-1">
 					<Label for="object-text-textarea-{object.id}">Object Text</Label>
-					<Textarea id="object-text-textarea-{object.id}" bind:value={object.text} rows={5} />
+					<Textarea id="object-text-textarea-{object.id}" bind:value={object.text} rows={6} class="bg-gray-50"/>
 				</div>
 				<div class="grid grid-cols-2 gap-x-2 gap-y-2">
 					<WrappedInput
 						label="Object Title"
 						id="object-title-input-{object.id}"
-						bind:value={object.title}
+						bind:value={object.title} 
 					/>
 					<WrappedInput label="Object ID" id="object-id-input-{object.id}" bind:value={object.id} />
 					<WrappedSelect
@@ -800,6 +850,30 @@
 								</Label>
 							</div>
 							{#if object.activateOtherChoice}
+							<div class="flex flex-row items-center gap-x-1 ml-4">
+								<Checkbox
+									id="object-ignore-forced-activation-{object.id}"
+									bind:checked={() => object.isAllowDeselect ?? false,
+									(v) => (object.isAllowDeselect = v)}
+								/>
+								<Label for="object-ignore-forced-activation-{object.id}">
+									Allow deactivation of forced choices
+								</Label>
+							</div>
+							{/if}
+							{#if object.activateOtherChoice}
+								<div class="flex flex-row items-center gap-x-1 ml-4">
+									<Checkbox
+										id="object-cancel-deactivate-{object.id}"
+										bind:checked={() => object.isNotDeactivate ?? false,
+										(v) => (object.isNotDeactivate = v)}
+									/>
+									<Label for="object-cancel-deactivate-{object.id}">
+										Keep forced choices active after deselecting this choice
+									</Label>
+								</div>
+							{/if}
+							{#if object.activateOtherChoice}
 								<p>
 									Works badly if multiple of these have the same ID, or if the target has
 									requirements attached. You can use comma to activate multiple (ID,ID,ID/ON#1).
@@ -916,7 +990,7 @@
 									(v) => (object.textfieldIsOn = v)}
 								/>
 								<Label for="object-textfield-is-on-{object.id}">
-									Word will be changed to something else at select.
+									Word will be changed to something else at select
 								</Label>
 							</div>
 							{#if object.textfieldIsOn}
@@ -945,7 +1019,7 @@
 									(v) => (object.isImageUpload = v)}
 								/>
 								<Label for="object-is-image-upload-{object.id}">
-									Player can upload a picture by pressing this choice.
+									Player can upload a picture by pressing this choice
 								</Label>
 							</div>
 							<div class="flex flex-row items-center gap-x-1">
@@ -955,7 +1029,7 @@
 									(v) => (object.addToAllowChoice = v)}
 								/>
 								<Label for="object-add-to-allow-choice-{object.id}">
-									Adds or takes away a row's Allowed Choices.
+									Adds or takes away a row's Allowed Choices
 								</Label>
 							</div>
 							{#if object.addToAllowChoice}
@@ -987,6 +1061,11 @@
 			class="w-full p-0"
 			style={objectBackground}
 			onclick={() => {
+				// Allow deactivation if isNotDeactivate is active
+				if (object.isActive && object.forcedActivated) {
+					return;
+				}
+				
 				if (object.isImageUpload) modal = 'appImageUpload';
 				else if (
 					!row.isInfoRow &&
@@ -995,6 +1074,10 @@
 					!object.isButtonObject
 				) {
 					activateObject(object, row);
+					// Remove forced activation when isNotDeactivate is active
+					if (object.isNotDeactivate) {
+						object.forcedActivated = false;
+					}
 				}
 			}}
 			role="button"

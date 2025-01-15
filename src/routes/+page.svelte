@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
+	import { base } from '$app/paths';
 
 	const commits = [
 		'b36b009f6ad45abfc79df9717e81a0238ca00163',
@@ -120,9 +121,9 @@
 		<h1 class="mb-0 text-5xl">[Mod] Interactive CYOA Creator Plus</h1>
 		<h6>Created by MeanDelay / Modified by Wahaha303</h6>
 		<div class="my-8 flex flex-col gap-y-2">
-			<Button href="/creator">Open Image-CYOA Creator</Button>
-			<Button href="/viewer">Open Image-CYOA Viewer</Button>
-			<Button href="/help">Help And Instructions</Button>
+			<Button href="{base}/creator">Open Image-CYOA Creator</Button>
+			<Button href="{base}/viewer">Open Image-CYOA Viewer</Button>
+			<Button href="{base}/help">Help And Instructions</Button>
 		</div>
 		<div class="flex flex-row justify-end">
 			<span>Update: 28.02.2021</span>

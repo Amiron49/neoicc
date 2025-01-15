@@ -1,38 +1,58 @@
-# sv
+# Neo Interactive CYOA Creator (NeoICC)
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+NeoICC is an ideological successor to the original Interactive CYOA Creator (ICC) created by MeanDelay. This project aims to provide a powerful and flexible CYOA creation tool with full backward compatibility and an open-source codebase.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Fully open-source
+- Backward compatible with ICC and ICC+ projects  
+- Developed on Svelte and works more stable with large projects
+
+## Getting Started
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
 
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+npm install
 ```
 
-## Developing
+### Development
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+To start the development server with the main interface:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
 
-## Building
+This will open the application in your default browser.
 
-To create a production version of your app:
+### Building
+
+The project has two build modes:
+
+1. Main development interface:
 
 ```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+This will create a production build in the `build` folder.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+2. Viewer mode (for viewing completed CYOA projects):
+
+```bash
+npm run build:viewer
+```
+
+This will create a production build for the viewer in the `build-viewer` folder. Works the same as before - just upload to the server and put project.json next to it.
+
+## Future Plans
+
+We are actively working on incorporating all the features from ICC+ into NeoICC and have plans to add even more exciting capabilities. Stay tuned for updates!
+
+## Contributing
+
+We welcome contributions from the community. Please feel free to submit issues, feature requests, or pull requests to help improve NeoICC.

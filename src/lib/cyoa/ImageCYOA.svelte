@@ -48,6 +48,7 @@
 	import Backpack from './style/Backpack.svelte';
 	import Text from './style/Text.svelte';
 	import { printDiv } from '$lib/utils';
+	import { backgroundImages } from './style/backgroundImageUtils';
 
 	const { isCreator }: { isCreator: boolean } = $props();
 
@@ -65,6 +66,13 @@
 		| 'appConfirm'
 	>('none');
 	let topNav = $state(false);
+
+	onMount(() => {
+		if (app.styling.selFilterBgImages) {
+			backgroundImages.set([...app.styling.selFilterBgImages]);
+			console.log('Initial backgroundImages in ImageCYOA:', app.styling.selFilterBgImages);
+		}
+	});
 
 	const navButtons = [
 		{
@@ -126,15 +134,21 @@
 			component: Brush,
 			action: () => (modal = 'appDesign')
 		},
-		{
-			text: 'Save/Load Project',
-			component: Save,
-			action: () => (modal = 'appLoad')
+	{
+		text: 'Save/Load Project',
+		component: Save,
+		action: () => {
+			console.log('Save/Load Project button clicked');
+			modal = 'appLoad';
+			console.log('Modal state after click:', modal);
 		}
+	}
 	] as const;
 
+	import { base } from '$app/paths';
+
 	onMount(() => {
-		fetch('/project.json')
+		fetch(`${base}/project.json`)
 			.then((r) => r.json())
 			.then(loadApp)
 			.catch((e) => console.info(`No local project.json found: ${e}`));
@@ -150,7 +164,7 @@
 	style:background-color={app.styling.backgroundColor}
 >
 	{#if isCreator && !topNav}
-		<nav class="fixed z-20 flex h-screen flex-col justify-between bg-white p-2">
+		<nav class="fixed z-20 flex h-screen flex-col justify-between bg-gray-200 p-2">
 			<div class="flex flex-col gap-y-2">
 				<Tooltip.Provider>
 					<Tooltip.Root>
@@ -227,6 +241,8 @@
 	{/if}
 	<div class={[isCreator && !topNav && 'ml-14']}>
 		{#if !isCreator}
+		    <!-- This block should not be displayed in viewer mode. Do not remove this comment - it prevents the Svelte compiler from throwing an empty block error -->
+			<!-- @dev-only -->
 			<div class="flex flex-row justify-between p-2" data-html2canvas-ignore>
 				<Button variant="outline" href="/" size="icon">
 					<ChevronLeft />
@@ -240,7 +256,7 @@
 			</div>
 		{:else if isCreator && topNav}
 			<nav
-				class="grid w-full grid-cols-8 justify-evenly gap-4 bg-white px-2.5 py-2.5"
+				class="grid w-full grid-cols-8 justify-evenly gap-4 bg-gray-200 px-2.5 py-2.5"
 				data-html2canvas-ignore
 			>
 				<Button href="/" variant="ghost">
@@ -418,7 +434,7 @@
 					<div>
 						{#if isCreator}
 							<div
-								class="mx-2 mt-2 flex flex-row items-center justify-between rounded border bg-white px-4 py-4"
+								class="mx-2 mt-2 flex flex-row items-center justify-between rounded border bg-gray-400 px-4 py-4"
 							>
 								<div>
 									<!-- eslint-disable-next-line svelte/no-at-html-tags -->

@@ -7,6 +7,9 @@ type Styling = {
 	addonTitle: string; // The font for the object-titles.
 	addonText: string; // The font for the object-under-text.
 
+	// Background images for activated objects
+	backgroundImages: string[];
+
 	// Size for the text.
 	rowTitleTextSize: number | string;
 	rowTextTextSize: number | string;
@@ -104,6 +107,14 @@ type Styling = {
 	selFilterSepia: number;
 	selBgColorIsOn: boolean;
 	selFilterBgColor: string;
+	selFilterBgImages: string[];
+	selFilterBgImageOpacity: number;
+	selFilterBgImageIsOn: boolean;
+	selFilterBgImagePosition: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+	selFilterBgImageRepeat: string;
+	selBorderColorIsOn: boolean;
+	selCTextColorIsOn: boolean;
+	selCTitleColorIsOn: boolean;
 
 	// Required Filter
 	reqFilterBlurIsOn: boolean;
@@ -127,6 +138,9 @@ type Styling = {
 	reqBgColorIsOn: boolean;
 	reqFilterBgColor: string;
 	reqFilterVisibleIsOn: boolean;
+	reqCTextColorIsOn: boolean;
+	reqCTitleColorIsOn: boolean;
+	reqFilterCTitleColor: string;
 
 	objectDesignIsAdvanced?: boolean;
 	rowDesignIsAdvanced?: boolean;
@@ -153,7 +167,6 @@ type Styling = {
 	selFilterATitleColor?: string;
 	selFilterATextColor?: string;
 	reqFilterBorderColor?: string;
-	reqFilterCTitleColor?: string;
 	reqFilterCTextColor?: string;
 	reqFilterATitleColor?: string;
 	reqFilterATextColor?: string;
@@ -245,8 +258,9 @@ export type Object = {
 	// imageIsUrl?: boolean;
 	deactivateOtherChoice?: boolean;
 	deactivateThisChoice?: string;
-	activateOtherChoice?: boolean;
-	activateThisChoice?: string;
+  activateOtherChoice?: boolean;
+  activateThisChoice?: string;
+  isNotDeactivate?: boolean;
 	multiplyPointtypeIsOn?: boolean;
 	multiplyPointtypeIsOnCheck?: boolean;
 	pointTypeToMultiply?: string;
@@ -277,6 +291,7 @@ export type Object = {
 	forcedActivated?: boolean;
 	// initMultipleTimesMinus?: number | string;
 	// imageLink?: string;
+	isAllowDeselect?: boolean;
 	idOfTheTextfieldWord?: string;
 	wordChangeSelect?: string;
 	wordChangeDeselect?: string;
@@ -409,11 +424,10 @@ export type App = {
 		imageSidePlacement?: boolean;
 		imageOnSide?: boolean;
 		iconWidth?: number | string;
-		iconHeight?: number | string;
+		iconHeight?: number | string;		
 		// initValue?: number;
 	}[]; // The pointtypes that the user have created.
 	variables: { id: string; isTrue: boolean }[]; // The variables that the user have created.
-
 	// The defaults that will fill the various text boxes.
 	defaultRowTitle: string;
 	defaultRowText: string;

@@ -2,6 +2,7 @@
 import { app } from './store.svelte';
 import type { App, Backpack, Object, PointType, Requireds, Row } from './types';
 import { pi } from './utils';
+import { backgroundImages } from '../cyoa/style/backgroundImageUtils';
 
 function toast(message: string) {
 	console.log(message);
@@ -581,32 +582,40 @@ export function activateObject(object: Object, row: Row | Backpack) {
 			if (object.activateOtherChoice && typeof object.activateThisChoice !== 'undefined') {
 				const array = object.activateThisChoice.split(',');
 
+				// First handle all child activations
 				for (const el of array.toReversed()) {
 					for (const row of rows) {
-						for (const object of row.objects) {
-							if (object.isSelectableMultiple) {
-								if (object.id === el.split('/ON#')[0]) {
+						for (const childObject of row.objects) {
+							if (childObject.isSelectableMultiple) {
+								if (childObject.id === el.split('/ON#')[0]) {
 									const num = pi(el.split('/ON#')[1]);
 									if (num > 0) {
 										for (let i = 0; i < num; i++) {
-											if (object.numMultipleTimesMinus)
-												object.numMultipleTimesMinus = pi(object.numMultipleTimesMinus) - 1;
-											object.forcedActivated = false;
-											selectedOneLess(object);
+											if (childObject.numMultipleTimesMinus)
+												childObject.numMultipleTimesMinus = pi(childObject.numMultipleTimesMinus) - 1;
+											childObject.forcedActivated = true;
+											selectedOneLess(childObject);
 										}
 									} else if (num < 0) {
 										for (let i = 0; i < -num; i++) {
-											selectedOneMore(object);
-											object.forcedActivated = false;
-											if (object.numMultipleTimesMinus)
-												object.numMultipleTimesMinus = pi(object.numMultipleTimesMinus) + 1;
+											selectedOneMore(childObject);
+											childObject.forcedActivated = true;
+											if (childObject.numMultipleTimesMinus)
+												childObject.numMultipleTimesMinus = pi(childObject.numMultipleTimesMinus) + 1;
 										}
 									}
 								}
 							} else {
-								if (object.id === el && object.isActive) {
-									object.isNotSelectable = false;
-									activateObject(object, row);
+								if (childObject.id === el) {
+									// Only activate if not already active
+									if (!childObject.isActive) {
+										childObject.isNotSelectable = false;
+										activateObject(childObject, row);
+									}
+									// Set forcedActivated only if parent doesn't have isAllowDeselect
+									if (typeof object.isAllowDeselect === 'undefined' || object.isAllowDeselect === false) {
+										childObject.forcedActivated = true;
+									}
 								}
 							}
 						}
@@ -803,36 +812,38 @@ export function activateObject(object: Object, row: Row | Backpack) {
 			if (object.activateOtherChoice && typeof object.activateThisChoice !== 'undefined') {
 				const array = object.activateThisChoice.split(',');
 
+				// First handle all child deactivations
 				for (const el of array.toReversed()) {
-					// This will force activate another choice.
-
 					for (const row of rows) {
-						for (const object of row.objects) {
-							if (object.isSelectableMultiple) {
-								if (object.id === el.split('/ON#')[0]) {
+						for (const childObject of row.objects) {
+							if (childObject.isSelectableMultiple) {
+								if (childObject.id === el.split('/ON#')[0]) {
 									const num = pi(el.split('/ON#')[1]);
 									if (num > 0) {
 										for (let i = 0; i < num; i++) {
-											selectedOneMore(object);
-											object.forcedActivated = true;
-											if (object.numMultipleTimesMinus)
-												object.numMultipleTimesMinus = pi(object.numMultipleTimesMinus) + 1;
+											selectedOneMore(childObject);
+											childObject.forcedActivated = false;
+											if (childObject.numMultipleTimesMinus)
+												childObject.numMultipleTimesMinus = pi(childObject.numMultipleTimesMinus) + 1;
 										}
 									} else if (num < 0) {
 										for (let i = 0; i < -num; i++) {
-											if (object.numMultipleTimesMinus)
-												object.numMultipleTimesMinus = pi(object.numMultipleTimesMinus) - 1;
-											object.forcedActivated = true;
-											selectedOneLess(object);
+											if (childObject.numMultipleTimesMinus)
+												childObject.numMultipleTimesMinus = pi(childObject.numMultipleTimesMinus) - 1;
+											childObject.forcedActivated = false;
+											selectedOneLess(childObject);
 										}
 									}
 								}
 							} else {
-								if (object.id !== el || object.isActive) {
-									if (object.id === el && object.isActive) object.isNotSelectable = true;
-								} else {
-									object.isNotSelectable = true;
-									activateObject(object, row);
+								if (childObject.id === el) {
+									// Only deactivate if currently active and isNotDeactivate is not set
+									if (childObject.isActive && !object.isNotDeactivate) {
+										activateObject(childObject, row);
+									}
+									// Reset child object state when parent deactivates
+									childObject.isNotSelectable = false;
+									childObject.forcedActivated = false;
 								}
 							}
 						}
@@ -1251,5 +1262,15 @@ export function loadApp(n: App) {
 		} else {
 			(app as { [key in keyof typeof app]: unknown })[key] = n[key];
 		}
+	}
+
+	// Handle backgroundImages
+	if (n.styling && Array.isArray(n.styling.selFilterBgImages) && n.styling.selFilterBgImages.length > 0) {
+		app.styling.selFilterBgImages = [...n.styling.selFilterBgImages];
+		// Update the backgroundImages store
+		backgroundImages.set(app.styling.selFilterBgImages);
+		console.log('Loaded background images:', JSON.stringify(app.styling.selFilterBgImages));
+	} else {
+		console.log('No background images found in loaded data');
 	}
 }

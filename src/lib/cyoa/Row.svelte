@@ -252,19 +252,21 @@
 
 {#snippet RowImage()}
 	{#if row.image}
-		<img
-			class="inline-block"
-			style:width={styling.rowImageWidth + '%'}
-			style:margin-top={styling.rowImageMarginTop + '%'}
-			style:margin-bottom={styling.rowImageMarginBottom + '%'}
-			style:border-radius={`${styling.rowImgBorderRadiusTopLeft}0${rowImageBorderRadiusSuffix} ${styling.rowImgBorderRadiusTopRight}0${rowImageBorderRadiusSuffix} ${styling.rowImgBorderRadiusBottomRight}0${rowImageBorderRadiusSuffix} ${styling.rowImgBorderRadiusBottomLeft}0${rowImageBorderRadiusSuffix}`}
-			style:overflow={styling.rowImgOverflowIsOn ? 'hidden' : undefined}
-			style:border={styling.rowImgBorderIsOn
-				? `${styling.rowImgBorderWidth}px ${styling.rowImgBorderStyle} ${styling.rowImgBorderColor}`
-				: undefined}
-			src={getImageURL(row.image, appMetaState.imagePrefix)}
-			alt="row"
-		/>
+		<div class="relative inline-block">
+			<img
+				class="inline-block"
+				style:width={styling.rowImageWidth + '%'}
+				style:margin-top={styling.rowImageMarginTop + '%'}
+				style:margin-bottom={styling.rowImageMarginBottom + '%'}
+				style:border-radius={`${styling.rowImgBorderRadiusTopLeft}0${rowImageBorderRadiusSuffix} ${styling.rowImgBorderRadiusTopRight}0${rowImageBorderRadiusSuffix} ${styling.rowImgBorderRadiusBottomRight}0${rowImageBorderRadiusSuffix} ${styling.rowImgBorderRadiusBottomLeft}0${rowImageBorderRadiusSuffix}`}
+				style:overflow={styling.rowImgOverflowIsOn ? 'hidden' : undefined}
+				style:border={styling.rowImgBorderIsOn
+					? `${styling.rowImgBorderWidth}px ${styling.rowImgBorderStyle} ${styling.rowImgBorderColor}`
+					: undefined}
+				src={getImageURL(row.image, appMetaState.imagePrefix)}
+				alt="row"
+			/>
+		</div>
 	{:else}
 		<div class="inline-block"></div>
 	{/if}
@@ -347,7 +349,7 @@
 >
 	{#if isEditModeOn}
 		<div>
-			<div class="flex flex-row justify-end rounded-t border bg-white p-2">
+			<div class="flex flex-row justify-end rounded-t border bg-gray-200 p-2">
 				{@render TooltipIconButton(FilePlus2, 'Create New Object', () => {
 					row.objects.push({
 						id: generateID(),
@@ -379,24 +381,46 @@
 				})}
 			</div>
 			<div
-				class="flex flex-row flex-wrap justify-around gap-4 rounded-b border-x border-b bg-white p-2"
+				class="flex flex-row flex-wrap justify-around gap-4 rounded-b border-x border-b bg-gray-200 p-2"
 			>
-				<div>
+				<div class="w-[22%]">
 					<!-- The upload of Image -->
 					{#if !row.isButtonRow}
 						<div class="flex flex-col items-center gap-y-2">
-							{#if row.image}
-								<button onclick={() => (modal = 'appImageUpload')}>
-									<img
-										class="inline-block h-max max-h-36 w-max max-w-80"
-										src={getImageURL(row.image, appMetaState.imagePrefix)}
-										alt="row"
-									/>
+							<div class="w-full relative">
+								<button onclick={() => (modal = 'appImageUpload')} class="w-full">
+									{#if row.image}
+										<img
+											class="inline-block h-[270px] w-auto object-contain"
+											src={getImageURL(row.image, appMetaState.imagePrefix)}
+											alt="row"
+											style="max-height: 270px; min-height: 150px;"
+										/>
+									{:else}
+										<div 
+											class="h-[270px] w-full flex items-center justify-center border-2 border-dashed border-gray-300 bg-gray-50"
+											style="max-height: 270px; min-height: 150px;"
+										>
+											<span class="text-gray-500">Set Image</span>
+										</div>
+									{/if}
 								</button>
-							{/if}
-							<Button onclick={() => (modal = 'appImageUpload')} class="w-full min-w-48">
-								Change Image
-							</Button>
+								{#if row.image}
+									<button
+										class="absolute top-1 right-1 bg-white/50 hover:bg-white/80 rounded-full w-6 h-6 flex items-center justify-center shadow-sm"
+										onclick={(e) => {
+											e.stopPropagation();
+											row.image = '';
+										}}
+										aria-label="Remove image"
+									>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+											<line x1="18" y1="6" x2="6" y2="18"></line>
+											<line x1="6" y1="6" x2="18" y2="18"></line>
+										</svg>
+									</button>
+								{/if}
+							</div>
 						</div>
 					{:else}
 						<!-- The button that opens button settings -->
@@ -452,14 +476,14 @@
 						id="row-width-input-{row.id}"
 						label="Row Title"
 						placeholder="Placeholder"
-						bind:value={row.title}
+						bind:value={row.title} 
 					/>
 					<WrappedInput
 						id="allowed-choices-input-{row.id}"
 						label="Allowed Choices"
 						type="number"
 						placeholder="Placeholder"
-						bind:value={row.allowedChoices}
+						bind:value={row.allowedChoices} 
 					/>
 				</div>
 				<div class="flex flex-col gap-y-2">
@@ -489,28 +513,28 @@
 						bind:value={row.currentChoices}
 					/>
 				</div>
-				<div>
-					<div class="flex flex-col items-start gap-y-1">
+				<div class="w-[45%]">
+					<div class="flex flex-col items-start gap-y-1 w-full">
 						<Label for="row-text-textarea-{row.id}">Row Text</Label>
 						<Textarea
 							id="row-text-textarea-{row.id}"
 							bind:value={row.titleText}
-							rows={8}
-							class="min-w-96"
+							rows={10}
+							class="w-full"
 						/>
 					</div>
 				</div>
 				<div class="flex w-full flex-row justify-around gap-x-2">
-					<div class="flex flex-row items-center gap-x-1">
-						<Switch
-							id="deselect-choices-switch-{row.id}"
-							bind:checked={() => row.deselectChoices ?? false, (v) => (row.deselectChoices = v)}
-						/>
-						<Label for="deselect-choices-switch-{row.id}" class="text-left">
-							Deselects choices when Row lack requirements?
-						</Label>
-					</div>
 					{#if row.isResultRow}
+						<div class="flex flex-row items-center gap-x-1">
+							<Switch
+								id="deselect-choices-switch-{row.id}"
+								bind:checked={() => row.deselectChoices ?? false, (v) => (row.deselectChoices = v)}
+							/>
+							<Label for="deselect-choices-switch-{row.id}" class="text-left">
+								Deselects choices when Row lack requirements?
+							</Label>
+						</div>
 						<div class="flex flex-row items-center gap-x-1">
 							<Switch
 								id="choices-share-template-switch-{row.id}"

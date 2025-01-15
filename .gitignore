@@ -7,6 +7,7 @@ node_modules
 .wrangler
 /.svelte-kit
 /build
+/build-viewer
 
 # OS
 .DS_Store
@@ -23,3 +24,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 /static/project.json
+
+# LLM stuff
+DOCUMENTATION_for_LLM.md
+/Extra_documentation_for_LLM
