@@ -216,7 +216,8 @@ function updateImageInput(index: number, value: string) {
 												bind:value={styling.selFilterBgImageRepeat}
 											>
 												<option value="repeat">Repeat</option>
-												<option value="round">Cover</option>
+												<option value="round">Round</option>
+												<option value="space">Space</option>
 												<option value="no-repeat">No-repeat</option>
 											</select>
 										</div>
