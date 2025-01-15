@@ -1,4 +1,4 @@
-type Styling = {
+export type Styling = {
 	// Font for the text.
 	rowTitle: string; // The font for the row-titles.
 	rowText: string; // The font for the row-under-text.
@@ -189,7 +189,73 @@ type Styling = {
 	objectImgObjectFillHeight?: number | string;
 };
 
-type Colors = {
+export type RowStyling = Styling & {
+	scoreText: string;
+	scoreTextSize: number | string;
+	scoreTextColor: string;
+	scoreTextAlign: string;
+
+	rowButtonXPadding: number;
+	rowButtonYPadding: number;
+
+	objectImageMarginTop: number | string;
+	objectImageMarginBottom: number | string;
+	rowImageMarginTop: number | string;
+
+	// Border radius object, and border
+	objectBorderRadiusTopLeft: number;
+	objectBorderRadiusTopRight: number;
+	objectBorderRadiusBottomRight: number;
+	objectBorderRadiusBottomLeft: number;
+	objectBorderRadiusIsPixels: boolean;
+	objectOverflowIsOn?: boolean;
+
+	objectBorderIsOn: boolean;
+	objectBorderColor: string;
+	objectBorderStyle: string;
+	objectBorderWidth: number;
+
+	// Border radius object image, and border
+	objectImgBorderRadiusTopLeft: number;
+	objectImgBorderRadiusTopRight: number;
+	objectImgBorderRadiusBottomRight: number;
+	objectImgBorderRadiusBottomLeft: number;
+	objectImgBorderRadiusIsPixels: boolean;
+
+	objectImgBorderIsOn: boolean;
+	objectImgBorderColor: string;
+	objectImgBorderStyle: string;
+	objectImgBorderWidth: number;
+
+	// Border radius row image, and border
+	rowImgBorderRadiusTopLeft: number;
+	rowImgBorderRadiusTopRight: number;
+	rowImgBorderRadiusBottomRight: number;
+	rowImgBorderRadiusBottomLeft: number;
+	rowImgBorderRadiusIsPixels: boolean;
+
+	rowImgBorderIsOn: boolean;
+	rowImgBorderColor: string;
+	rowImgBorderStyle: string;
+	rowImgBorderWidth: number;
+
+	rowBorderIsOn: boolean;
+	rowBorderColor: string;
+	rowBorderStyle: string;
+	rowBorderWidth: number;
+
+	// Border radius row, and border
+	rowBorderRadiusTopLeft: number;
+	rowBorderRadiusTopRight: number;
+	rowBorderRadiusBottomRight: number;
+	rowBorderRadiusBottomLeft: number;
+	rowBorderRadiusIsPixels: boolean;
+	rowOverflowIsOn: boolean;
+
+	backPackWidth: number;
+};
+
+export type Colors = {
 	alpha: number;
 	hex: string;
 	hexa: string;
@@ -441,71 +507,7 @@ export type App = {
 	defaultAddonText: string;
 
 	// The styling that has to be done in the row.
-	styling: Styling & {
-		scoreText: string;
-		scoreTextSize: number | string;
-		scoreTextColor: string;
-		scoreTextAlign: string;
-
-		rowButtonXPadding: number;
-		rowButtonYPadding: number;
-
-		objectImageMarginTop: number | string;
-		objectImageMarginBottom: number | string;
-		rowImageMarginTop: number | string;
-
-		// Border radius object, and border
-		objectBorderRadiusTopLeft: number;
-		objectBorderRadiusTopRight: number;
-		objectBorderRadiusBottomRight: number;
-		objectBorderRadiusBottomLeft: number;
-		objectBorderRadiusIsPixels: boolean;
-		objectOverflowIsOn?: boolean;
-
-		objectBorderIsOn: boolean;
-		objectBorderColor: string;
-		objectBorderStyle: string;
-		objectBorderWidth: number;
-
-		// Border radius object image, and border
-		objectImgBorderRadiusTopLeft: number;
-		objectImgBorderRadiusTopRight: number;
-		objectImgBorderRadiusBottomRight: number;
-		objectImgBorderRadiusBottomLeft: number;
-		objectImgBorderRadiusIsPixels: boolean;
-
-		objectImgBorderIsOn: boolean;
-		objectImgBorderColor: string;
-		objectImgBorderStyle: string;
-		objectImgBorderWidth: number;
-
-		// Border radius row image, and border
-		rowImgBorderRadiusTopLeft: number;
-		rowImgBorderRadiusTopRight: number;
-		rowImgBorderRadiusBottomRight: number;
-		rowImgBorderRadiusBottomLeft: number;
-		rowImgBorderRadiusIsPixels: boolean;
-
-		rowImgBorderIsOn: boolean;
-		rowImgBorderColor: string;
-		rowImgBorderStyle: string;
-		rowImgBorderWidth: number;
-
-		rowBorderIsOn: boolean;
-		rowBorderColor: string;
-		rowBorderStyle: string;
-		rowBorderWidth: number;
-
-		// Border radius row, and border
-		rowBorderRadiusTopLeft: number;
-		rowBorderRadiusTopRight: number;
-		rowBorderRadiusBottomRight: number;
-		rowBorderRadiusBottomLeft: number;
-		rowBorderRadiusIsPixels: boolean;
-		rowOverflowIsOn: boolean;
-
-		backPackWidth: number;
-	};
+	styling: RowStyling;
 	importedChoicesIsOpen?: boolean;
 };
 
