@@ -4,6 +4,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Separator } from '$lib/components/ui/separator';
 	import { Switch } from '$lib/components/ui/switch';
+	import { Tooltip, TooltipContent, TooltipTrigger } from '$lib/components/ui/tooltip';
 	import WrappedStyle from '$lib/components/wrapped/WrappedStyle.svelte';
 	import WrappedImageInput from '$lib/components/wrapped/WrappedImageInput.svelte';
 	import { app } from '$lib/store/store.svelte';
@@ -169,9 +170,15 @@ function updateImageInput(index: number, value: string) {
 									{/each}
 									{#if styling.selFilterBgImages.length < 10}
 										<button
-											class="text-blue-500"
-											onclick={addImageInput}>Add Another Image</button
+											class="text-blue-500 relative group"
+											onclick={addImageInput}
 										>
+											Add Another Image
+											<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-sm text-white bg-gray-700 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+												Additional images will be randomly selected as backgrounds for activated cards.
+												<div class="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent border-t-4 border-t-gray-700"></div>
+											</div>
+										</button>
 									{/if}
 									{#if styling.selFilterBgImages[0]}
 										<div class="flex flex-row items-center gap-x-1">
