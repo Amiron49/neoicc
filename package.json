@@ -6,7 +6,8 @@
 	"scripts": {
 		"dev": "bunx --bun vite dev",
 		"build": "cross-env BUILD_TYPE=full bunx --bun vite build",
-		"build:viewer": "cross-env BUILD_TYPE=viewer bunx --bun vite build",
+		"build:static": "cross-env ADAPTER=static cross-env BUILD_TYPE=full bunx --bun vite build",
+		"build:viewer": "cross-env ADAPTER=static cross-env BUILD_TYPE=viewer bunx --bun vite build",
 		"preview": "bunx --bun vite preview",
 		"check": "bunx --bun svelte-kit sync && bunx --bun svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "bunx --bun svelte-kit sync && bunx --bun svelte-check --tsconfig ./tsconfig.json --watch",
