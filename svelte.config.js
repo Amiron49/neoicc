@@ -1,4 +1,5 @@
-import adapter from '@sveltejs/adapter-static';
+import staticAdapter from '@sveltejs/adapter-static';
+import cfAdapter from '@sveltejs/adapter-cloudflare'
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import fs from 'fs';
 import path from 'path';
@@ -46,7 +47,7 @@ const config = {
             relative: true
         },
         
-        adapter: adapter({
+        adapter: process.env.ADAPTER === 'static' ? staticAdapter({
             pages: process.env.BUILD_TYPE === 'viewer' ? 'build-viewer' : 'build',
             assets: process.env.BUILD_TYPE === 'viewer' ? 'build-viewer' : 'build',
             fallback: undefined,
@@ -68,7 +69,7 @@ const config = {
                     }
                 }
             }
-        })
+        }) : cfAdapter()
     }
 };
 
