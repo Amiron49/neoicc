@@ -1,5 +1,5 @@
-import { adapter as staticAdapter } from '@sveltejs/adapter-static';
-import { adapter as autoAdapter } from '@sveltejs/adapter-auto';
+import staticAdapter from '@sveltejs/adapter-static';
+import cfAdapter from '@sveltejs/adapter-cloudflare'
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import fs from 'fs';
 import path from 'path';
@@ -69,7 +69,7 @@ const config = {
                     }
                 }
             }
-        }) : autoAdapter()
+        }) : cfAdapter()
     }
 };
 
