@@ -151,6 +151,7 @@
 			style += `background-repeat: ${styling.selFilterBgImageRepeat};`;
 			style += `background-position: ${styling.selFilterBgImagePosition};`;
 			style += `background-origin: border-box;`;
+			style += `background-size: ${styling.selFilterBgImageWidth} auto;`;
 			style += `opacity: ${styling.selFilterBgImageOpacity}%;`;
 			style += `filter: blur(${styling.selFilterBlur}px) brightness(${styling.selFilterBright}%) contrast(${styling.selFilterCont}%) grayscale(${styling.selFilterGray}%) hue-rotate(${styling.selFilterHue}deg) invert(${styling.selFilterInvert}%) saturate(${styling.selFilterSatur}) sepia(${styling.selFilterSepia}%);`;
 		} else if (styling.selBgColorIsOn) {

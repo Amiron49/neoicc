@@ -205,7 +205,19 @@ function updateImageInput(index: number, value: string) {
 												<option value="100% 0%">Top Right</option>
 												<option value="0% 100%">Bottom Left</option>
 												<option value="100% 100%">Bottom Right</option>
+												<option value="50% 100%">Bottom Center</option>
 												<option value="50% 50%">Center</option>
+											</select>
+										</div>
+										<div class="flex flex-row items-center gap-x-1">
+											<Label for="styling-sel-bg-image-width">Image Width</Label>
+											<select
+												id="styling-sel-bg-image-width"
+												class="rounded border p-1"
+												bind:value={styling.selFilterBgImageWidth}
+											>
+												<option value="auto">Auto</option>
+												<option value="100%">100%</option>
 											</select>
 										</div>
 										<div class="flex flex-row items-center gap-x-1">
