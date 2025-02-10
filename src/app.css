@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.grid {
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
