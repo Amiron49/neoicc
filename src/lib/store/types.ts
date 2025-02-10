@@ -112,6 +112,7 @@ export type Styling = {
 	selFilterBgImageIsOn: boolean;
 	selFilterBgImagePosition: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 	selFilterBgImageRepeat: string;
+	selFilterBgImageWidth: 'auto' | '100%';
 	selBorderColorIsOn: boolean;
 	selCTextColorIsOn: boolean;
 	selCTitleColorIsOn: boolean;
