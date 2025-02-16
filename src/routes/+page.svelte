@@ -46,10 +46,22 @@
         </div>
  
         <div class="space-y-6">
-            <div class="flex justify-end">
-                <span class="text-sm text-gray-500 bg-white/70 px-3 py-1 rounded-full">
-                    Update: 28.02.2025
-                </span>
+            <div class="relative">
+                <div class="absolute right-0">
+                    <span class="text-sm text-gray-500 bg-white/70 px-3 py-1 rounded-full">
+                        Update: 16.02.2025
+                    </span>
+                </div>
+                <div class="flex justify-center">
+                    <a 
+                        href="https://github.com/sgvsbg8gv29ybgqk/neoicc/releases/tag/Viewer"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-sm text-gray-500 bg-white/70 px-3 py-1 rounded-full hover:bg-gray-200 transition-colors"
+                    >
+                        Download Viewer
+                    </a>
+                </div>
             </div>
 
             <div class="space-y-4 bg-white/70 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-100">
