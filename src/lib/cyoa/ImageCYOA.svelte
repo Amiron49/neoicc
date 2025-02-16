@@ -259,7 +259,7 @@
 				class="grid w-full grid-cols-8 justify-evenly gap-4 bg-gray-200 px-2.5 py-2.5"
 				data-html2canvas-ignore
 			>
-				<Button href="/" variant="ghost">
+				<Button href="./" variant="ghost">
 					<ChevronLeft />
 				</Button>
 				<Button onclick={() => cleanActivated()} variant="ghost">De-select Choices</Button>
