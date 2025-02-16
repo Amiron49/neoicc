@@ -170,7 +170,7 @@
 					<Tooltip.Root>
 						<Tooltip.Trigger
 							class={buttonVariants({ variant: 'ghost', size: 'icon' })}
-							onclick={() => goto('/')}
+							onclick={() => goto('../')}
 						>
 							<ChevronLeft />
 						</Tooltip.Trigger>
@@ -244,7 +244,7 @@
 		    <!-- This block should not be displayed in viewer mode. Do not remove this comment - it prevents the Svelte compiler from throwing an empty block error -->
 			<!-- @dev-only -->
 			<div class="flex flex-row justify-between p-2" data-html2canvas-ignore>
-				<Button variant="outline" href="/" size="icon">
+				<Button variant="outline" href="../" size="icon">
 					<ChevronLeft />
 				</Button>
 				<div class="flex flex-row gap-x-2">
@@ -259,7 +259,7 @@
 				class="grid w-full grid-cols-8 justify-evenly gap-4 bg-gray-200 px-2.5 py-2.5"
 				data-html2canvas-ignore
 			>
-				<Button href="./" variant="ghost">
+				<Button href="../" variant="ghost">
 					<ChevronLeft />
 				</Button>
 				<Button onclick={() => cleanActivated()} variant="ghost">De-select Choices</Button>
