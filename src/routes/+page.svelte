@@ -15,8 +15,7 @@
                 Created by MeanDelay / Recreated by SGVsbG8gd29ybGQh
             </h6>
         </div>
-
-        <!-- Кнопки с hover-эффектами -->
+ 
         <div class="my-8 flex flex-col gap-y-3">
             <Button 
                 href="{base}/creator"
@@ -37,8 +36,7 @@
                 Help And Instructions
             </Button>
         </div>
-
-        <!-- Информационный блок -->
+ 
         <div class="p-6 bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-gray-100 text-gray-700">
             <p class="leading-relaxed">
                 This is an open-source version of the original Interactive CYOA Creator, completely rewritten in Svelte.
@@ -46,8 +44,7 @@
                 while maintaining full compatibility with ICC and partially with ICC+ files.
             </p>
         </div>
-
-        <!-- Блок обновлений -->
+ 
         <div class="space-y-6">
             <div class="flex justify-end">
                 <span class="text-sm text-gray-500 bg-white/70 px-3 py-1 rounded-full">
@@ -72,8 +69,7 @@
                     </li>
                 </ul>
             </div>
-
-            <!-- GitHub кнопка -->
+ 
             <div class="flex justify-center pt-4">
                 <a 
                     href="https://github.com/sgvsbg8gv29ybgqk/neoicc"
