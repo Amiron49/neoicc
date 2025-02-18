@@ -298,7 +298,7 @@
 
 <main class="prose mx-auto mt-8">
 	<div class="flex flex-row items-center gap-x-4">
-		<Button variant="outline" href="/" size="icon">
+		<Button variant="outline" href="../" size="icon">
 			<ChevronLeft />
 		</Button>
 
