@@ -47,24 +47,24 @@
 
 <WrappedStyle title="Choice Design" {open} {onclose} {embedded} class="sm:max-w-[1200px]">
 	<div class="grid gap-4 py-4">
-		{#if styling.objectDesignIsAdvanced}
-			<div class="grid grid-cols-3 gap-4">
-				<div class="flex flex-col gap-y-2">
-					<h6>Margin and Padding of the choices</h6>
-					<WrappedInput
+		<div class="grid grid-cols-3 gap-4">
+			<div class="flex flex-col gap-y-2">
+				<h6>Margin and Padding of the choices</h6>
+				<WrappedInput
 						id="object-margin"
 						label="Margin"
 						type="number"
 						suffix="px"
 						bind:value={styling.objectMargin}
-					/>
-					<WrappedInput
+				/>
+				<WrappedInput
 						id="object-text-padding"
 						label="Padding"
 						type="number"
 						suffix="px"
 						bind:value={styling.objectTextPadding}
-					/>
+				/>
+				{#if styling.objectDesignIsAdvanced}
 					<h6>Style and Width of the border</h6>
 					<WrappedSelect
 						id="object-border-style"
@@ -81,12 +81,14 @@
 						bind:value={styling.objectBorderWidth}
 					/>
 					<div class="flex flex-row items-center gap-x-1">
-						<Checkbox id="object-overflow-is-on" bind:checked={styling.objectOverflowIsOn} />
+						<Checkbox id="object-overflow-is-on" bind:checked={styling.objectOverflowIsOn}/>
 						<Label for="object-overflow-is-on">Border-Radius Cuts off overflow</Label>
 					</div>
-				</div>
-				<div class="flex flex-col gap-y-2">
-					<h6>Shadow that the choice makes</h6>
+				{/if}
+			</div>
+			<div class="flex flex-col gap-y-2">
+				<h6>Shadow that the choice makes</h6>
+				{#if styling.objectDesignIsAdvanced}
 					<WrappedInput
 						id="object-drop-shadow-h"
 						label="Horizontal Shadow"
@@ -115,13 +117,33 @@
 						suffix="px"
 						bind:value={styling.objectDropShadowSpread}
 					/>
-					<div class="flex flex-row items-center gap-x-1">
-						<Checkbox id="object-drop-shadow-is-on" bind:checked={styling.objectDropShadowIsOn} />
-						<Label for="object-drop-shadow-is-on">Drop Shadow is turned on</Label>
-					</div>
+				{:else}
+					<WrappedInput
+						id="object-drop-shadow-h"
+						label="The Higher the number the bigger the shadow will be."
+						type="number"
+						suffix="px"
+						bind:value={() => styling.objectDropShadowH,
+						(v) => {
+							styling.objectDropShadowH = v;
+							styling.objectDropShadowV = v;
+							styling.objectDropShadowSpread = v;
+							styling.objectDropShadowBlur = v;
+						}}
+					/>
+				{/if}
+				<div class="flex flex-row items-center gap-x-1">
+					<Checkbox id="object-drop-shadow-is-on" bind:checked={styling.objectDropShadowIsOn}/>
+					<Label for="object-drop-shadow-is-on">Drop Shadow Is turned on</Label>
 				</div>
-				<div class="flex flex-col gap-y-2">
-					<h6>Rounded corners on the choices</h6>
+				<div class="flex flex-row items-center gap-x-1">
+					<Checkbox id="object-border-is-on" bind:checked={styling.objectBorderIsOn}/>
+					<Label for="object-border-is-on">Border is turned on</Label>
+				</div>
+			</div>
+			<div class="flex flex-col gap-y-2">
+				<h6>Rounded corners on the choices</h6>
+				{#if styling.objectDesignIsAdvanced}
 					<WrappedInput
 						id="object-border-radius-top-left"
 						label="Top Left"
@@ -161,70 +183,7 @@
 						/>
 						<Label for="object-border-radius-is-pixels">Border-Radius Percent or Pixels?</Label>
 					</div>
-				</div>
-			</div>
-		{:else}
-			<div class="grid grid-cols-4 gap-4">
-				<div class="flex flex-col gap-y-2">
-					<h6>Margin and Padding of the choices</h6>
-					<WrappedInput
-						id="object-margin"
-						label="Space between the choices"
-						type="number"
-						suffix="px"
-						bind:value={styling.objectMargin}
-					/>
-					<WrappedInput
-						id="object-text-padding"
-						label="Space between the text in the choices and its border"
-						type="number"
-						suffix="px"
-						bind:value={styling.objectTextPadding}
-					/>
-				</div>
-				<div class="flex flex-col gap-y-2">
-					<h6>Shadow that the choice makes</h6>
-					<WrappedInput
-						id="object-drop-shadow-h"
-						label="The Higher the number the bigger the shadow will be."
-						type="number"
-						suffix="px"
-						bind:value={() => styling.objectDropShadowH,
-						(v) => {
-							styling.objectDropShadowH = v;
-							styling.objectDropShadowV = v;
-							styling.objectDropShadowSpread = v;
-							styling.objectDropShadowBlur = v;
-						}}
-					/>
-					<div class="flex flex-row items-center gap-x-1">
-						<Checkbox id="object-drop-shadow-is-on" bind:checked={styling.objectDropShadowIsOn} />
-						<Label for="object-drop-shadow-is-on">Drop Shadow Is turned on</Label>
-					</div>
-					<div class="flex flex-row items-center gap-x-1">
-						<Checkbox id="object-border-is-on" bind:checked={styling.objectBorderIsOn} />
-						<Label for="object-border-is-on">Border is turned on</Label>
-					</div>
-				</div>
-				<div class="flex flex-col gap-y-2">
-					<h6>Style and Width of the border</h6>
-					<WrappedSelect
-						id="object-border-style"
-						label="Border Styles"
-						items={borderStyles.map((e) => ({ value: e.value, name: e.value }))}
-						bind:value={styling.objectBorderStyle}
-						placeholder="Select Style"
-					/>
-					<WrappedInput
-						id="object-border-width"
-						label="Border Width"
-						type="number"
-						suffix="px"
-						bind:value={styling.objectBorderWidth}
-					/>
-				</div>
-				<div class="flex flex-col gap-y-2">
-					<h6>Rounded corners on the choices</h6>
+				{:else}
 					<WrappedInput
 						id="object-border-radius-top-left"
 						label="Rounded corners in the top of each choice"
@@ -249,9 +208,9 @@
 							styling.objectBorderRadiusBottomRight = v;
 						}}
 					/>
-				</div>
+				{/if}
 			</div>
-		{/if}
+		</div>
 		<div class="grid grid-cols-3 gap-4">
 			<div class="flex flex-col gap-y-2">
 				<h6>Color of the Drop Shadow</h6>
