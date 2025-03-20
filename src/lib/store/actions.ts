@@ -261,24 +261,6 @@ export function checkRequireds(object: { requireds?: Requireds[] }) {
 	return true;
 }
 
-function checkPoints(object: Object, pointTypes: PointType[]) {
-	let check = true;
-	// Then make the one that
-
-	for (const score of object.scores) {
-		if (checkRequireds(score) && !score.isActive) {
-			// Goes trough all of the scores and check which is fits.
-			for (const pointType of pointTypes) {
-				if (pointType.id === score.id && pointType.belowZeroNotAllowed) {
-					if (pi(pointType.startingSum) - pi(score.value) < 0) check = false;
-				}
-			}
-		}
-	}
-
-	return check;
-}
-
 // Sets the state as default, cleans all activated and refounds all used points.
 export function cleanActivated() {
 	// For each of the rows.
@@ -403,33 +385,49 @@ export function cleanActivated() {
 	}
 }
 
-function checkPointsA(object: Object) {
+/**
+ * Evaluates if activating/incrementing the choice would keep all points within their constraints
+ *
+ * @param {Object} object - The choice containing scores and related data to be checked.
+ * @return {boolean} Returns true if activating/decrementing the choice is valid and meets point conditions, otherwise false.
+ */
+function checkPointsValidAfterNegativePointChange(object: Object): boolean {
 	for (const score of object.scores) {
-		if (checkRequireds(score) && !score.isActive) {
-			for (const pointType of app.pointTypes) {
-				if (
-					pointType.id === score.id &&
-					pointType.belowZeroNotAllowed &&
-					pi(pointType.startingSum) - pi(score.value) < 0
-				)
-					return false;
-			}
+		if (score.isActive || !checkRequireds(score)) {	
+			continue;
 		}
+		
+		let pointType = app.pointTypes.find(pointType => pointType.id === score.id);
+		
+		if (pointType &&
+			pointType.belowZeroNotAllowed &&
+			pi(pointType.startingSum) - pi(score.value) < 0
+		)
+			return false;
 	}
+	return true;
 }
 
-function checkPointsR(object: Object) {
+/**
+ * Evaluates if deactivating/decrementing the choice would keep all points within their constraints
+ *
+ * @param {Object} object - The choice containing scores and related data to be checked.
+ * @return {boolean} Returns true if incrementing the choice is valid and meets point conditions, otherwise false.
+ */
+function checkPointsValidAfterPositivePointChange(object: Object) : boolean {
 	for (const score of object.scores) {
-		if (checkRequireds(score) && !score.isActive) {
-			for (const pointType of app.pointTypes) {
-				if (
-					pointType.id == score.id &&
-					pointType.belowZeroNotAllowed &&
-					pi(pointType.startingSum) + pi(score.value) < 0
-				) {
-					return false;
-				}
-			}
+		if (score.isActive || !checkRequireds(score)) {
+			continue;
+		}
+
+		let pointType = app.pointTypes.find(pointType => pointType.id === score.id);
+		
+		if (
+			pointType &&
+			pointType.belowZeroNotAllowed &&
+			pi(pointType.startingSum) + pi(score.value) < 0
+		) {
+			return false;
 		}
 	}
 	return true;
@@ -437,96 +435,92 @@ function checkPointsR(object: Object) {
 
 // used when the - in a multiple is pressed.
 export function selectedOneMore(object: Object) {
-	let isLessThanLimit = true;
-
-	// If the multiple choice uses its own variable.
+	// If the multiple choice uses its own internal variable.
 	if (object.isMultipleUseVariable) {
 		object.multipleUseVariable = object.multipleUseVariable ?? 0;
-		if (pi(object.numMultipleTimesPluss) > pi(object.multipleUseVariable) && checkPointsA(object)) {
+		if (pi(object.numMultipleTimesPluss) > pi(object.multipleUseVariable) && checkPointsValidAfterNegativePointChange(object)) {
 			object.multipleUseVariable = pi(object.multipleUseVariable) + 1;
 			object.selectedThisManyTimesProp = object.multipleUseVariable;
 		} else {
-			isLessThanLimit = false;
+			return; 
 		}
 	} else {
-		for (const pointType of app.pointTypes) {
-			if (pointType.id === object.multipleScoreId) {
-				if (pi(object.numMultipleTimesPluss) > pi(pointType.startingSum)) {
-					pointType.startingSum = pi(pointType.startingSum) + 1;
-					object.selectedThisManyTimesProp = pointType.startingSum;
-				} else {
-					isLessThanLimit = false;
-				}
+		let externalVariable = app.pointTypes.find(pointType => pointType.id === object.multipleScoreId);
+		
+		if (externalVariable) {
+			if (pi(object.numMultipleTimesPluss) > pi(externalVariable.startingSum)) {
+				externalVariable.startingSum = pi(externalVariable.startingSum) + 1;
+				object.selectedThisManyTimesProp = externalVariable.startingSum;
+			} else {
+				return;
 			}
 		}
 	}
-	if (isLessThanLimit) {
-		for (const score of object.scores) {
-			// Goes trough all of the scores and check which is fits.
-			for (const pointType of app.pointTypes) {
-				if (pointType.id === score.id && checkRequireds(score))
-					pointType.startingSum = pi(pointType.startingSum) - pi(score.value);
-			}
+	
+	// Go through all the choice scores and decrease the associated points
+	for (const score of object.scores) {
+		let pointType = app.pointTypes.find(pointType => pointType.id === score.id);
+		
+		if (pointType && checkRequireds(score)) {
+			pointType.startingSum = pi(pointType.startingSum) - pi(score.value);
 		}
-		if (
-			object.isActive === false &&
-			object.selectedThisManyTimesProp &&
-			object.numMultipleTimesMinus &&
-			pi(object.selectedThisManyTimesProp) > pi(object.numMultipleTimesMinus)
-		)
-			object.isActive = true;
 	}
+	if (
+		object.isActive === false &&
+		object.selectedThisManyTimesProp &&
+		object.numMultipleTimesMinus &&
+		pi(object.selectedThisManyTimesProp) > pi(object.numMultipleTimesMinus)
+	)
+		object.isActive = true;
 }
 
 // used when the + in a multiple is pressed.
 export function selectedOneLess(object: Object) {
-	let isLessThanLimit = true;
-	// If the multiple choice uses its own variable.
+	// If the multiple choice uses its own internal variable.
 	if (object.isMultipleUseVariable) {
 		object.multipleUseVariable = object.multipleUseVariable ?? 0;
-		if (pi(object.numMultipleTimesMinus) < object.multipleUseVariable && checkPointsR(object)) {
+		if (pi(object.numMultipleTimesMinus) < object.multipleUseVariable && checkPointsValidAfterPositivePointChange(object)) {
 			object.multipleUseVariable--;
 			object.selectedThisManyTimesProp = object.multipleUseVariable;
 		} else {
-			isLessThanLimit = false;
+			return;
 		}
 	} else {
-		for (const pointType of app.pointTypes) {
-			if (pointType.id === object.multipleScoreId) {
-				if (pi(object.numMultipleTimesMinus) < pi(pointType.startingSum)) {
-					pointType.startingSum = pi(pointType.startingSum) - 1;
-					object.selectedThisManyTimesProp = pointType.startingSum;
-				} else {
-					isLessThanLimit = false;
-				}
+		let externalVariable = app.pointTypes.find(pointType => pointType.id === object.multipleScoreId);
+		
+		if (externalVariable) {
+			if (pi(object.numMultipleTimesMinus) < pi(externalVariable.startingSum)) {
+				externalVariable.startingSum = pi(externalVariable.startingSum) - 1;
+				object.selectedThisManyTimesProp = externalVariable.startingSum;
+			} else {
+				return;
 			}
 		}
 	}
-	if (isLessThanLimit) {
-		for (const score of object.scores) {
-			// Goes trough all of the scores and check which is fits.
-			for (const pointType of app.pointTypes) {
-				if (pointType.id === score.id && checkRequireds(score)) {
-					pointType.startingSum = pi(pointType.startingSum) + pi(score.value);
-				}
-			}
+
+	// Go through all the choice scores and increase the associated points
+	for (const score of object.scores) {
+		let pointType = app.pointTypes.find(pointType => pointType.id === score.id);
+		
+		if (pointType && checkRequireds(score)) {
+			pointType.startingSum = pi(pointType.startingSum) + pi(score.value);
 		}
-		if (
-			object.isActive === true &&
-			object.selectedThisManyTimesProp &&
-			object.numMultipleTimesMinus &&
-			pi(object.selectedThisManyTimesProp) == pi(object.numMultipleTimesMinus) &&
-			(typeof object.forcedActivated === 'undefined' || object.forcedActivated === false)
-		)
-			object.isActive = false;
 	}
+	if (
+		object.isActive === true &&
+		object.selectedThisManyTimesProp &&
+		object.numMultipleTimesMinus &&
+		pi(object.selectedThisManyTimesProp) == pi(object.numMultipleTimesMinus) &&
+		(typeof object.forcedActivated === 'undefined' || object.forcedActivated === false)
+	)
+		object.isActive = false;
 }
 
 // When someone clicks on a object this process needs to happen.
 export function activateObject(object: Object, row: Row | Backpack) {
 	const { activated, pointTypes, rows, groups, words } = app;
 	const hasRequireds = checkRequireds(object);
-	const hasPoints = checkPoints(object, pointTypes);
+	const hasPoints = checkPointsValidAfterNegativePointChange(object);
 
 	// Will here run trugh all the scores, and check if there is enough
 	// 1. Find the type of points and how many there is.
