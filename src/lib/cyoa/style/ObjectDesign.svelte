@@ -52,14 +52,12 @@
 				<div class="flex flex-col gap-y-2">
 					<h6>Margin and Padding of the choices</h6>
 					<WrappedInput
-						id="object-margin"
 						label="Margin"
 						type="number"
 						suffix="px"
 						bind:value={styling.objectMargin}
 					/>
 					<WrappedInput
-						id="object-text-padding"
 						label="Padding"
 						type="number"
 						suffix="px"
@@ -67,14 +65,12 @@
 					/>
 					<h6>Style and Width of the border</h6>
 					<WrappedSelect
-						id="object-border-style"
 						label="Border Styles"
 						items={borderStyles.map((e) => ({ value: e.value, name: e.value }))}
 						bind:value={styling.objectBorderStyle}
 						placeholder="Select Style"
 					/>
 					<WrappedInput
-						id="object-border-width"
 						label="Border Width"
 						type="number"
 						suffix="px"
@@ -88,28 +84,24 @@
 				<div class="flex flex-col gap-y-2">
 					<h6>Shadow that the choice makes</h6>
 					<WrappedInput
-						id="object-drop-shadow-h"
 						label="Horizontal Shadow"
 						type="number"
 						suffix="px"
 						bind:value={styling.objectDropShadowH}
 					/>
 					<WrappedInput
-						id="object-drop-shadow-v"
 						label="Vertical Shadow"
 						type="number"
 						suffix="px"
 						bind:value={styling.objectDropShadowV}
 					/>
 					<WrappedInput
-						id="object-drop-shadow-blur"
 						label="Shadow Blur"
 						type="number"
 						suffix="px"
 						bind:value={styling.objectDropShadowBlur}
 					/>
 					<WrappedInput
-						id="object-drop-shadow-spread"
 						label="Shadow Spread"
 						type="number"
 						suffix="px"
@@ -123,7 +115,6 @@
 				<div class="flex flex-col gap-y-2">
 					<h6>Rounded corners on the choices</h6>
 					<WrappedInput
-						id="object-border-radius-top-left"
 						label="Top Left"
 						placeholder="0"
 						type="number"
@@ -131,7 +122,6 @@
 						bind:value={styling.objectBorderRadiusTopLeft}
 					/>
 					<WrappedInput
-						id="object-border-radius-top-right"
 						label="Top Right"
 						placeholder="0"
 						type="number"
@@ -139,7 +129,6 @@
 						bind:value={styling.objectBorderRadiusTopRight}
 					/>
 					<WrappedInput
-						id="object-border-radius-bottom-right"
 						label="Bottom Right"
 						placeholder="0"
 						type="number"
@@ -147,7 +136,6 @@
 						bind:value={styling.objectBorderRadiusBottomRight}
 					/>
 					<WrappedInput
-						id="object-border-radius-bottom-left"
 						label="Bottom Left"
 						placeholder="0"
 						type="number"
@@ -168,14 +156,12 @@
 				<div class="flex flex-col gap-y-2">
 					<h6>Margin and Padding of the choices</h6>
 					<WrappedInput
-						id="object-margin"
 						label="Space between the choices"
 						type="number"
 						suffix="px"
 						bind:value={styling.objectMargin}
 					/>
 					<WrappedInput
-						id="object-text-padding"
 						label="Space between the text in the choices and its border"
 						type="number"
 						suffix="px"
@@ -185,7 +171,6 @@
 				<div class="flex flex-col gap-y-2">
 					<h6>Shadow that the choice makes</h6>
 					<WrappedInput
-						id="object-drop-shadow-h"
 						label="The Higher the number the bigger the shadow will be."
 						type="number"
 						suffix="px"
@@ -209,14 +194,12 @@
 				<div class="flex flex-col gap-y-2">
 					<h6>Style and Width of the border</h6>
 					<WrappedSelect
-						id="object-border-style"
 						label="Border Styles"
 						items={borderStyles.map((e) => ({ value: e.value, name: e.value }))}
 						bind:value={styling.objectBorderStyle}
 						placeholder="Select Style"
 					/>
 					<WrappedInput
-						id="object-border-width"
 						label="Border Width"
 						type="number"
 						suffix="px"
@@ -226,7 +209,6 @@
 				<div class="flex flex-col gap-y-2">
 					<h6>Rounded corners on the choices</h6>
 					<WrappedInput
-						id="object-border-radius-top-left"
 						label="Rounded corners in the top of each choice"
 						placeholder="0"
 						type="number"
@@ -238,7 +220,6 @@
 						}}
 					/>
 					<WrappedInput
-						id="object-border-radius-bottom-left"
 						label="Rounded corners in the bottom of each choice"
 						placeholder="0"
 						type="number"
@@ -281,19 +262,16 @@
 				</div>
 				{#if styling.objectGradientIsOn}
 					<WrappedInput
-						id="object-gradient"
 						label="Gradient when not selected"
 						placeholder="to left, blue, red"
 						bind:value={styling.objectGradient}
 					/>
 					<WrappedInput
-						id="object-gradient-on-select"
 						label="Gradient when selected"
 						placeholder="to left, blue, red"
 						bind:value={styling.objectGradientOnSelect}
 					/>
 					<WrappedInput
-						id="object-gradient-on-req"
 						label="Gradient when missing requirement"
 						placeholder="to left, blue, red"
 						bind:value={styling.objectGradientOnReq}

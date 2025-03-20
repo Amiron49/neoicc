@@ -12,9 +12,6 @@ export function getImageURL(image: string, imagePrefix: string): string {
 	return res;
 }
 
-export function generateID(length = 4): string {
-	let id = '';
-	const charset = 'abcdefghijklmnopqrstuvwxyz0123456789';
-	for (let o = 0; o < length; o++) id += charset.charAt(Math.floor(Math.random() * charset.length));
-	return id;
+export function generateID(): string {
+	return window.crypto.randomUUID().replace(/-/g, '');
 }
