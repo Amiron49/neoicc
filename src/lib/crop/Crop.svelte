@@ -169,7 +169,7 @@
 
 	let hasCrop = !!crop;
 	$effect(() => {
-		// Useful for when programatically setting a new
+		// Useful for when programmatically setting a new
 		// crop and wanting to show a preview.
 		if (oncomplete && !hasCrop && crop) {
 			const { width, height } = getBox();
