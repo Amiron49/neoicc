@@ -5,9 +5,16 @@
 	let {
 		ref = $bindable(null),
 		class: className,
-		checked = $bindable(false),
+		checked = $bindable(),
 		...restProps
 	}: WithoutChildrenOrChild<SwitchPrimitive.RootProps> = $props();
+
+	const set_default = () => {
+		if (checked === undefined)
+			checked = false;
+	};
+
+	$effect.pre(set_default);
 </script>
 
 <SwitchPrimitive.Root
