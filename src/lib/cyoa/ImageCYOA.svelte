@@ -279,61 +279,51 @@
 				<Filter
 					open={appMetaState.currentDesignComponent === 'appFilter'}
 					onclose={() => (appMetaState.currentDesignComponent = 'none')}
-					embedded={true}
 				/>
 			{:else if appMetaState.currentDesignComponent === 'appBackground'}
 				<Background
 					open={appMetaState.currentDesignComponent === 'appBackground'}
 					onclose={() => (appMetaState.currentDesignComponent = 'none')}
-					embedded={true}
 				/>
 			{:else if appMetaState.currentDesignComponent === 'appMultiChoice'}
 				<MultiChoice
 					open={appMetaState.currentDesignComponent === 'appMultiChoice'}
 					onclose={() => (appMetaState.currentDesignComponent = 'none')}
-					embedded={true}
 				/>
 			{:else if appMetaState.currentDesignComponent === 'appObjectDesign'}
 				<ObjectDesign
 					open={appMetaState.currentDesignComponent === 'appObjectDesign'}
 					onclose={() => (appMetaState.currentDesignComponent = 'none')}
-					embedded={true}
 				/>
 			{:else if appMetaState.currentDesignComponent === 'appObjectImage'}
 				<ObjectImage
 					open={appMetaState.currentDesignComponent === 'appObjectImage'}
 					onclose={() => (appMetaState.currentDesignComponent = 'none')}
-					embedded={true}
 				/>
 			{:else if appMetaState.currentDesignComponent === 'appPointBar'}
 				<PointBar
 					open={appMetaState.currentDesignComponent === 'appPointBar'}
 					onclose={() => (appMetaState.currentDesignComponent = 'none')}
-					embedded={true}
 				/>
 			{:else if appMetaState.currentDesignComponent === 'appRowDesign'}
 				<RowDesign
 					open={appMetaState.currentDesignComponent === 'appRowDesign'}
 					onclose={() => (appMetaState.currentDesignComponent = 'none')}
-					embedded={true}
 				/>
 			{:else if appMetaState.currentDesignComponent === 'appRowImage'}
 				<RowImage
 					open={appMetaState.currentDesignComponent === 'appRowImage'}
 					onclose={() => (appMetaState.currentDesignComponent = 'none')}
-					embedded={true}
 				/>
 			{:else if appMetaState.currentDesignComponent === 'appText'}
 				<Text
 					open={appMetaState.currentDesignComponent === 'appText'}
 					onclose={() => (appMetaState.currentDesignComponent = 'none')}
-					embedded={true}
 				/>
 			{:else if appMetaState.currentDesignComponent === 'appBackpack'}
 				<Backpack
 					open={appMetaState.currentDesignComponent === 'appBackpack'}
 					onclose={() => (appMetaState.currentDesignComponent = 'none')}
-					embedded={true}
 				/>
 			{/if}
 		</div>
