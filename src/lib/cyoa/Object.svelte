@@ -35,7 +35,7 @@
 	import Requirement from './row/Requirement.svelte';
 	import ObjectSettings from './object/ObjectSettings.svelte';
 	import ObjectAddon from './object/ObjectAddon.svelte';
-	import ObjectRequirement from './object/ObjectRequirement.svelte';
+	import ObjectRequirements from './object/ObjectRequirements.svelte';
 	import DOMPurify from 'dompurify';
 	import { onMount } from 'svelte';
 	import WrappedSelect from '$lib/components/wrapped/WrappedSelect.svelte';
@@ -714,7 +714,7 @@
 										)}
 									>
 										<div class="flex flex-col">
-											<ObjectRequirement obj={object} {required} />
+											<ObjectRequirements obj={object} {required} />
 											<Button
 												onclick={() => {
 													const idx = object.requireds.indexOf(required);
