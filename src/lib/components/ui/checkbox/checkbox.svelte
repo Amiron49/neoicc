@@ -6,11 +6,21 @@
 
 	let {
 		ref = $bindable(null),
-		checked = $bindable(false),
-		indeterminate = $bindable(false),
+		checked = $bindable(),
+		indeterminate = $bindable(),
 		class: className,
 		...restProps
 	}: WithoutChildrenOrChild<CheckboxPrimitive.RootProps> = $props();
+
+	const set_default = () => {
+		if (checked === undefined) 
+			checked = false;
+		
+		if (indeterminate === undefined) 
+			indeterminate = false;
+	};
+
+	$effect.pre(set_default);
 </script>
 
 <CheckboxPrimitive.Root
